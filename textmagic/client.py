@@ -48,15 +48,7 @@ class _TextMagicClientBase(object):
         else:
             return responseClass(resp)
 
-    def send(self, text, phone, unicode_=None, max_length=None):
-        """
-        Send a message to one or more numbers.
-        text - The message
-        phone - a list of phone numbers
-
-        See http://api.textmagic.com/https-api/textmagic-api-commands#send
-        (send_time parameter not implemented yet)
-        """
+    def _send(self, text, phone, max_length, unicode_):
         if not isinstance(phone, list): phone = [phone]
         if unicode_ is None:
             if is_gsm(text): unicode_ = 0
@@ -70,6 +62,19 @@ class _TextMagicClientBase(object):
         if max_length is not None:
             params_dict['max_length'] = str(max_length)
         return self.executeCommand(params_dict, SendResponse)
+
+    def send(self, text, phone, max_length=None):
+        """
+        Send a message to one or more numbers.
+        text - The message
+        phone - a list of phone numbers
+
+        See http://api.textmagic.com/https-api/textmagic-api-commands#send
+        (send_time parameter not implemented yet)
+        """
+        if is_gsm(text): unicode_ = 0
+        else: unicode_ = 1
+        return self._send(text, phone, max_length, unicode_)
 
     def account(self):
         """

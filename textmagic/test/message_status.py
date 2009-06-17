@@ -8,7 +8,7 @@ from textmagic.test import TextMagicTestsBase
 class MessageStatusTests(TextMagicTestsBase):
     def sendAndCheckStatusTo(self, numbers):
         message = 'sdfqwersdfgfdg'
-        result = self.client.send(message, numbers, 0)
+        result = self.client.send(message, numbers)
         ids = result['message_id'].keys()
         statuses = self.getStatus(ids, message)
         return (ids, message)

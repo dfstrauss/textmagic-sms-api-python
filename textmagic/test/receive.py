@@ -34,5 +34,5 @@ class ReceiveTests(TextMagicTestsBase):
 
     def testReceiveUnicodeMessage(self):
         expected_text = u'\u2800\u2801\u2802\u2803 \u27f0'
-        print len(expected_text)
+        self.assertEquals(len(expected_text), 6)
         self.assertTrue(len(self.receiveMessages(2, expected_text=expected_text)) == 1)
