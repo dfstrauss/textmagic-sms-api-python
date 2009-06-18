@@ -28,12 +28,6 @@ Outstanding functionality (coming soon) is:
 
 """
 
-__author__ = "Dawie Strauss"
-__copyright__ = "Copyright 2009, TextMagic Ltd"
-__license__ = "BSD"
-__version__ = "0.0.1"
-__status__ = "Development"
-
 def import_json():
     try:
         import simplejson as json

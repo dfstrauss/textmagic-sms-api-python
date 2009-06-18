@@ -1,28 +1,31 @@
-import ez_setup
-ez_setup.use_setuptools()
+from distutils.core import setup
 
-#    From: http://peak.telecommunity.com/DevCenter/setuptools#egg-info-examples
-#    Creating a dated "nightly build" snapshot egg:
-#    python setup.py egg_info --tag-date --tag-build=DEV bdist_egg
-#    Creating and uploading a release with no version tags, even if some default tags are specified in setup.cfg:
-#    python setup.py egg_info -RDb "" sdist bdist_egg register upload
-#    (Notice that egg_info must always appear on the command line before any commands that you want the version changes to apply to.)
-
-from setuptools import setup, find_packages
 setup(
-    name = "py-textmagic",
-    version = "0.0.1",
+    name="PyTextMagicSMS",
+    version="0.1a1",
 
-    description="TextMagic SMS HTTPS API",
-    long_description="This is a Python wrapper for the TextMagic SMS sending web service",
+    description="TextMagic SMS API",
+    long_description="This is a Python wrapper for the TextMagic HTTPS API for sending SMS messages",
 
     author="Dawie Strauss",
     author_email="dfstrauss@gmail.com",
-    url="http://undefined.org/python/#simplejson",
+    url="http://code.google.com/p/textmagic-sms-api-python/",
     license="BSD",
-    packages=find_packages(exclude=['ez_setup']),
+    packages=['textmagic'],
     platforms=['any'],
-    test_suite="textmagic.test.main.py",
 
-    zip_safe=False,
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Telecommunications Industry',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2.4',
+        'Programming Language :: Python :: 2.5',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Communications',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],
 )
