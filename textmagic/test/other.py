@@ -8,7 +8,7 @@ from textmagic.gsm0338 import is_gsm
 class ParameterErrorTests(TextMagicTestsBase):
     def testWrongCommandFails(self):
         try:
-            self.client.executeCommand({'cmd': 'nonexistent_command'}, SendResponse)
+            self.client._executeCommand({'cmd': 'nonexistent_command'}, SendResponse)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
             self.assertEquals(e.code, 3)
@@ -16,7 +16,7 @@ class ParameterErrorTests(TextMagicTestsBase):
 
     def testInsufficientParametersFail(self):
         try:
-            self.client.executeCommand({'cmd': 'send'}, SendResponse)
+            self.client._executeCommand({'cmd': 'send'}, SendResponse)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
             self.assertEquals(e.code, 4)

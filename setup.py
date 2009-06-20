@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name="PyTextMagicSMS",
-    version="0.1a1",
+    version="0.1a2",
 
     description="TextMagic SMS API",
     long_description="This is a Python wrapper for the TextMagic HTTPS API for sending SMS messages",
@@ -14,8 +14,9 @@ setup(
     packages=['textmagic'],
     platforms=['any'],
 
+    download_url="http://pypi.python.org/pypi/PyTextMagicSMS",
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'Intended Audience :: Telecommunications Industry',

@@ -1,10 +1,10 @@
 """
 GSM 03.38 character set mapping to Unicode is specified here:
- http://unicode.org/Public/MAPPINGS/ETSI/GSM0338.TXT
+    http://unicode.org/Public/MAPPINGS/ETSI/GSM0338.TXT
 This code was translated from the C++ snippet at:
- http://stackoverflow.com/questions/27599/reliable-sms-unicode-gsm-encoding-in-php
+    http://stackoverflow.com/questions/27599/reliable-sms-unicode-gsm-encoding-in-php
 contributed by Magnus Westin:
- http://stackoverflow.com/users/2957/magnus-westin
+    http://stackoverflow.com/users/2957/magnus-westin
 
 """
 
@@ -80,6 +80,7 @@ ucs2_gcl_to_gsm = [
 ]
 
 def not_gsm(char):
+    """Is this character NOT in the GSM 03.38 character set?"""
     result = True
     ordinal = ord(char)
     if(ordinal < UCS2_TO_GSM_LOOKUP_TABLE_SIZE):
@@ -92,6 +93,7 @@ def not_gsm(char):
     return result;
 
 def is_gsm(string):
+    """Does the string consist entirely of GSM03.38 characters?"""
     assert isinstance(string, basestring)
     for ch in string:
         if (not_gsm(ch)):
