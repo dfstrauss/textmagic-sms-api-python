@@ -22,7 +22,7 @@ class _TextMagicClientBase(object):
         self.password = password
         self.logging = False
 
-    def logMessage(self, text):
+    def _log_message(self, text):
         if self.logging:
             f = open('executed_commands.log', 'a')
             f.write("%s\n" % text)
@@ -62,7 +62,7 @@ class _TextMagicClientBase(object):
 
     def _executeCommand(self, params_dict, responseClass):
         response = self._submitRequest(params_dict)
-        self.logMessage("Response:     %s\n-----" % response)
+        self._log_message("Response:     %s\n-----" % response)
         resp = json.loads(response)
         if resp.has_key('error_code'):
             raise TextMagicError(resp)
@@ -228,7 +228,7 @@ class TextMagicClient(_TextMagicClientBase):
         params_dict['username'] = self.username
         params_dict['password'] = self.password
         params = urllib.urlencode(params_dict)
-        self.logMessage("Parameters:   %s" % params)
+        self._log_message("Parameters:   %s" % params)
         request = urllib2.Request(self.api_url, params)
         response = urllib2.urlopen(request)
         assert response.info()['Content-Type'] == 'application/json; charset=utf-8',\
