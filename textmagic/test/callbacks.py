@@ -14,7 +14,7 @@ class CallbackUrlTests(TextMagicTestsBase):
             'timestamp' : "1243797781",
             'credits_cost' : "1",
         }
-        response = self.client.callbackMessage(post_params)
+        response = self.client.callback_message(post_params)
         self.assertTrue(isinstance(response, StatusCallbackResponse))
         self.assertTrue(isinstance(response['status'], unicode))
         self.assertEquals(response['status'], "d")
@@ -34,7 +34,7 @@ class CallbackUrlTests(TextMagicTestsBase):
             'timestamp' : "1243837563",
             'from' : "27991114444",
         }
-        response = self.client.callbackMessage(post_params)
+        response = self.client.callback_message(post_params)
         self.assertTrue(isinstance(response, ReplyCallbackResponse))
         self.assertTrue(isinstance(response['message_id'], unicode))
         self.assertEquals(response['message_id'], "1788907")
@@ -54,7 +54,7 @@ class CallbackUrlTests(TextMagicTestsBase):
             'timestamp' : "1243837563",
             'from' : "27991114444",
         }
-        response = self.client.callbackMessage(post_params)
+        response = self.client.callback_message(post_params)
         self.assertTrue(isinstance(response, ReplyCallbackResponse))
         self.assertEquals(response['text'], u'\u2800')
         self.assertEquals(len(response['text']), 1)

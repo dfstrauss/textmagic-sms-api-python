@@ -30,7 +30,7 @@ class TextMagicResponseTests(unittest.TestCase):
         try:
             textmagic.client.SendResponse(message)
         except AssertionError, e:
-            self.assertEquals(str(e), 'message_id cannot be empty!')
+            self.assertEquals(str(e), 'Invalid server response: message_id cannot be empty!')
 
     def testAccountResponse(self):
         message = json.loads('{"balance":"96.5"}')
@@ -131,6 +131,6 @@ class TextMagicResponseTests(unittest.TestCase):
         message = json.loads('{"error_code":15,"error_message":"Unicode symbols detected"}')
         response = textmagic.client.TextMagicError(message)
         self.assertTrue(isinstance(response, Exception))
-        self.assertTrue(isinstance(response.code, int))
-        self.assertTrue(isinstance(response.message, unicode))
+        self.assertTrue(isinstance(response.error_code, int))
+        self.assertTrue(isinstance(response.error_message, unicode))
 

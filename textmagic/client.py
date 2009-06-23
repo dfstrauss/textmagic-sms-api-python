@@ -28,7 +28,7 @@ class _TextMagicClientBase(object):
             f.write("%s\n" % text)
             f.close()
 
-    def callbackMessage(self, params_dict):
+    def callback_message(self, params_dict):
         """
         Interpret a notification sent to your callback URL.
 
@@ -232,5 +232,5 @@ class TextMagicClient(_TextMagicClientBase):
         request = urllib2.Request(self.api_url, params)
         response = urllib2.urlopen(request)
         assert response.info()['Content-Type'] == 'application/json; charset=utf-8',\
-            'Wrong HTTP Content-Type header!'
+            'Invalid server response: Wrong HTTP Content-Type header!'
         return response.read()

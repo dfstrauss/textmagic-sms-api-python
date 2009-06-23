@@ -11,16 +11,16 @@ class ParameterErrorTests(TextMagicTestsBase):
             self.client._executeCommand({'cmd': 'nonexistent_command'}, SendResponse)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
-            self.assertEquals(e.code, 3)
-            self.assertEquals(e.message, 'Command is undefined')
+            self.assertEquals(e.error_code, 3)
+            self.assertEquals(e.error_message, 'Command is undefined')
 
     def testInsufficientParametersFail(self):
         try:
             self.client._executeCommand({'cmd': 'send'}, SendResponse)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
-            self.assertEquals(e.code, 4)
-            self.assertEquals(e.message, 'Insufficient parameters')
+            self.assertEquals(e.error_code, 4)
+            self.assertEquals(e.error_message, 'Insufficient parameters')
 
 class Gsm0338CharacterSetTests(unittest.TestCase):
     def testSomeStrings(self):

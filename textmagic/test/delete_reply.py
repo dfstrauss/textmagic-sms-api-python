@@ -21,8 +21,8 @@ class DeleteReplyTests(TextMagicTestsBase):
             self.client.delete_reply([1787548,1787573])
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
-            self.assertEquals(e.code, 14)
-            self.assertEquals(e.message, 'Message with id 1787548, 1787573 does not exist')
+            self.assertEquals(e.error_code, 14)
+            self.assertEquals(e.error_message, 'Message with id 1787548, 1787573 does not exist')
 
 class DeleteReplyErrorsTests(TextMagicTestsBase):
     """
@@ -33,5 +33,5 @@ class DeleteReplyErrorsTests(TextMagicTestsBase):
             self.client.delete_reply(['5111%03d'%num for num in xrange(101)])
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
-            self.assertEquals(e.code, 12)
-            self.assertEquals(e.message, 'Too many items in one request')
+            self.assertEquals(e.error_code, 12)
+            self.assertEquals(e.error_message, 'Too many items in one request')

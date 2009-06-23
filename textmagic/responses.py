@@ -13,7 +13,7 @@ class SendResponse(dict):
         super(SendResponse, self).__init__(dict_)
         self['sent_text'] = _cast_to_type(unicode, self['sent_text'])
         self['parts_count'] = _cast_to_type(int, self['parts_count'])
-        assert len(self['message_id']), 'message_id cannot be empty!'
+        assert len(self['message_id']), 'Invalid server response: message_id cannot be empty!'
         for key in self['message_id'].iterkeys():
             self['message_id'][key] = _cast_to_type(unicode, self['message_id'][key])
 
@@ -73,8 +73,8 @@ class TextMagicError(Exception):
     See error codes at http://api.textmagic.com/https-api/api-error-codes
     """
     def __init__(self, dict_):
-        self.code = _cast_to_type(int, dict_['error_code'])
-        self.message = _cast_to_type(unicode, dict_['error_message'])
+        self.error_code = _cast_to_type(int, dict_['error_code'])
+        self.error_message = _cast_to_type(unicode, dict_['error_message'])
 
     def __str__(self):
-        return "%d: %s" % (self.code, self.message)
+        return "[Error %d] %s" % (self.error_code, self.error_message)

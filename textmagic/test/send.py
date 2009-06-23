@@ -35,8 +35,8 @@ class SendTestsBase(textmagic.test.TextMagicTestsBase):
             self.client._send(message, numbers, max_length, unicode)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
-            self.assertEquals(e.code, error_code)
-            self.assertEquals(e.message, error_message)
+            self.assertEquals(e.error_code, error_code)
+            self.assertEquals(e.error_message, error_message)
 
 class BasicSendTests(SendTestsBase):
     """
