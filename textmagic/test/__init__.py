@@ -17,6 +17,7 @@ api_username = 'username'
 api_password = 'password'
 client_class = MockTextMagicClient
 log_executed_commands=False
+running_live=False
 
 def gmtime_from_localtime(localtime):
     return time.gmtime(time.mktime(localtime))

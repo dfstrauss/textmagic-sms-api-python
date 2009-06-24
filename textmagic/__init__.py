@@ -20,7 +20,6 @@ methods on this class. Currently implemented commands are:
     receive
     delete_reply
 Outstanding functionality (coming soon) is:
-    send_time parameter for send command
     check_number command
 
 Getting started

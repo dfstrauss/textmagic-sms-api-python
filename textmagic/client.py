@@ -1,5 +1,6 @@
 import urllib
 import urllib2
+import time
 
 from textmagic.responses import SendResponse
 from textmagic.responses import AccountResponse
@@ -69,7 +70,7 @@ class _TextMagicClientBase(object):
         else:
             return responseClass(resp)
 
-    def _send(self, text, phone, max_length, unicode_):
+    def _send(self, text, phone, max_length, send_time, unicode_):
         if not isinstance(phone, list): phone = [phone]
         if unicode_ is None:
             if is_gsm(text): unicode_ = 0
@@ -82,9 +83,11 @@ class _TextMagicClientBase(object):
           }
         if max_length is not None:
             params_dict['max_length'] = str(max_length)
+        if send_time is not None:
+            params_dict['send_time'] = str(int(time.mktime(send_time)))
         return self._executeCommand(params_dict, SendResponse)
 
-    def send(self, text, phone, max_length=None):
+    def send(self, text, phone, max_length=None, send_time=None):
         """
         Send a message to one or more numbers.
 
@@ -97,7 +100,8 @@ class _TextMagicClientBase(object):
         Parameters:
             text - the message
             phone - one phone number or a list of numbers
-            max_length - maximum number of parts to split the message into
+            max_length - (optional) maximum parts to split the message into
+            send_time - (optional) time to send the message as time.struct_time
 
         Return:
             A textmagic.responses.SendResponse
@@ -105,13 +109,13 @@ class _TextMagicClientBase(object):
             response['message_id'] is a dict where the keys are message ids
                 (as allocated by the TextMagic system) and the values are
                 the corresponding destination phone numbers
-            response['sent_text'] is the text that was sent
+            response['sent_text'] is the message text
             response['parts_count'] is the number of parts the message was
                 split into
         """
         if is_gsm(text): unicode_ = 0
         else: unicode_ = 1
-        return self._send(text, phone, max_length, unicode_)
+        return self._send(text, phone, max_length, send_time, unicode_)
 
     def account(self):
         """

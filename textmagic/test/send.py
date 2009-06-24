@@ -1,3 +1,5 @@
+import time
+
 import textmagic
 
 from textmagic.test import ONE_TEST_NUMBER
@@ -19,8 +21,8 @@ class SendTestsBase(textmagic.test.TextMagicTestsBase):
 
     expected_keys = set(['sent_text', 'message_id', 'parts_count'])
 
-    def succeedingSendCase(self, message, numbers, expected_parts, unicode=None, max_length=None):
-        result = self.client._send(message, numbers, max_length, unicode)
+    def succeedingSendCase(self, message, numbers, expected_parts, max_length=None, send_time=None, unicode=None):
+        result = self.client._send(message, numbers, max_length, send_time, unicode)
         if not isinstance(numbers, list): numbers=[numbers]
         self.assertEquals(set(result.keys()), self.expected_keys)
         self.assertEquals(result['sent_text'], message)
@@ -30,9 +32,9 @@ class SendTestsBase(textmagic.test.TextMagicTestsBase):
             self.assertTrue(message_id.isdigit())
         self.assertEquals(result['parts_count'], expected_parts)
 
-    def failingSendCase(self, message, numbers, error_code, error_message, unicode=None, max_length = None):
+    def failingSendCase(self, message, numbers, error_code, error_message, max_length=None, send_time=None, unicode=None):
         try:
-            self.client._send(message, numbers, max_length, unicode)
+            self.client._send(message, numbers, max_length, send_time, unicode)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
             self.assertEquals(e.error_code, error_code)
@@ -166,6 +168,32 @@ class SendCharacterSetsTests(SendTestsBase):
                 message=message,
                 numbers=ONE_TEST_NUMBER,
                 expected_parts=2)
+
+class SendTimeTests(SendTestsBase):
+    def _time_now_plus_seconds(self, seconds):
+        if textmagic.test.running_live:
+            base_time = time.time()
+        else:
+            base_time = 1245879223
+        return time.localtime(base_time + seconds)
+
+    def testSendTimeInFuture(self):
+        message = 'Message from the future'
+        send_time = self._time_now_plus_seconds(120)
+        self.succeedingSendCase(
+            message=message,
+            numbers=ONE_TEST_NUMBER,
+            expected_parts=1,
+            send_time=send_time)
+    def testSendTimeInPast(self):
+        message = 'Message from the past'
+        send_time = self._time_now_plus_seconds(-300)
+        self.failingSendCase(
+            message=message,
+            numbers=ONE_TEST_NUMBER,
+            send_time=send_time,
+            error_code=10,
+            error_message='Wrong parameter value %d for parameter send_time' % time.mktime(send_time))
 
 class SendErrorsTests(SendTestsBase):
     """

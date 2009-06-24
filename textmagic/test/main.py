@@ -14,8 +14,6 @@ Parameters:
 __author__ = "Dawie Strauss"
 __copyright__ = "Copyright 2009, TextMagic Ltd"
 __license__ = "BSD"
-__version__ = "0.0.1"
-__status__ = "Development"
 
 import getopt
 import sys
@@ -46,6 +44,7 @@ def main():
             usage()
             sys.exit()
         elif o in ("-l", "--live"):
+            textmagic.test.running_live = True
             textmagic.test.client_class = textmagic.client.TextMagicClient
             textmagic.test.log_executed_commands = True
         elif o in ("-u", "--username"):
@@ -65,6 +64,7 @@ def main():
         textmagic.test.send.MultipartGsm0338SendTests,
         textmagic.test.send.MaxLengthSendTests,
         textmagic.test.send.SendCharacterSetsTests,
+        textmagic.test.send.SendTimeTests,
         textmagic.test.send.SendErrorsTests,
         textmagic.test.account.AccountTests,
         textmagic.test.message_status.MessageStatusTests,
