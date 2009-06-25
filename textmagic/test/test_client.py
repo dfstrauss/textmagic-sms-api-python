@@ -20,17 +20,17 @@ import sys
 import unittest
 
 import textmagic.test.mock_client
-import textmagic.test.send
-import textmagic.test.account
-import textmagic.test.message_status
-import textmagic.test.receive
-import textmagic.test.delete_reply
-import textmagic.test.other
-import textmagic.test.callbacks
-import textmagic.test.responses
+import textmagic.test.send_tests
+import textmagic.test.account_tests
+import textmagic.test.message_status_tests
+import textmagic.test.receive_tests
+import textmagic.test.delete_reply_tests
+import textmagic.test.other_tests
+import textmagic.test.callbacks_tests
+import textmagic.test.responses_tests
 
 def usage():
-    print "Usage: main.py\n%s" % __doc__
+    print "Usage: test_client.py\n%s" % __doc__
 
 def main():
     try:
@@ -59,26 +59,26 @@ def main():
 
     suite = unittest.TestSuite()
     tests = [
-        textmagic.test.send.BasicSendTests,
-        textmagic.test.send.MultipartUnicodeSendTests,
-        textmagic.test.send.MultipartGsm0338SendTests,
-        textmagic.test.send.MaxLengthSendTests,
-        textmagic.test.send.SendCharacterSetsTests,
-        textmagic.test.send.SendTimeTests,
-        textmagic.test.send.SendErrorsTests,
-        textmagic.test.account.AccountTests,
-        textmagic.test.message_status.MessageStatusTests,
-        textmagic.test.receive.ReceiveTests,
-        textmagic.test.delete_reply.DeleteReplyTests,
-        textmagic.test.delete_reply.DeleteReplyErrorsTests,
-        textmagic.test.other.ParameterErrorTests,
-        textmagic.test.other.Gsm0338CharacterSetTests,
-        textmagic.test.callbacks.CallbackUrlTests,
-        textmagic.test.responses.TextMagicResponseTests,
+        textmagic.test.send_tests.BasicSendTests,
+        textmagic.test.send_tests.MultipartUnicodeSendTests,
+        textmagic.test.send_tests.MultipartGsm0338SendTests,
+        textmagic.test.send_tests.MaxLengthSendTests,
+        textmagic.test.send_tests.SendCharacterSetsTests,
+        textmagic.test.send_tests.SendTimeTests,
+        textmagic.test.send_tests.SendErrorsTests,
+        textmagic.test.account_tests.AccountTests,
+        textmagic.test.message_status_tests.MessageStatusTests,
+        textmagic.test.receive_tests.ReceiveTests,
+        textmagic.test.delete_reply_tests.DeleteReplyTests,
+        textmagic.test.delete_reply_tests.DeleteReplyErrorsTests,
+        textmagic.test.other_tests.ParameterErrorTests,
+        textmagic.test.other_tests.Gsm0338CharacterSetTests,
+        textmagic.test.callbacks_tests.CallbackUrlTests,
+        textmagic.test.responses_tests.TextMagicResponseTests,
     ]
 ## Uncomment to run only BasicSendTests
 #    tests = [
-#        textmagic.test.send.BasicSendTests,
+#        textmagic.test.send_tests.BasicSendTests,
 #    ]
     for test in tests:
         suite.addTest(unittest.makeSuite(test))

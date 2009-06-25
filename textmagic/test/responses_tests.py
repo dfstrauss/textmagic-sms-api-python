@@ -30,7 +30,7 @@ class TextMagicResponseTests(unittest.TestCase):
         try:
             textmagic.client.SendResponse(message)
         except AssertionError, e:
-            self.assertEquals(str(e), 'Invalid server response: message_id cannot be empty!')
+            self.assertEquals(str(e), 'Invalid server response - message_id cannot be empty!')
 
     def testAccountResponse(self):
         message = json.loads('{"balance":"96.5"}')

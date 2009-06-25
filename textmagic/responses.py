@@ -13,7 +13,7 @@ class SendResponse(dict):
         super(SendResponse, self).__init__(dict_)
         self['sent_text'] = _cast_to_type(unicode, self['sent_text'])
         self['parts_count'] = _cast_to_type(int, self['parts_count'])
-        assert len(self['message_id']), 'Invalid server response: message_id cannot be empty!'
+        assert len(self['message_id']), 'Invalid server response - message_id cannot be empty!'
         for key in self['message_id'].iterkeys():
             self['message_id'][key] = _cast_to_type(unicode, self['message_id'][key])
 
