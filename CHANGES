@@ -1,5 +1,8 @@
 PyTextMagicSMS changelog
 
+0.1b1 (2009-06-25)
+- Added check_number command
+
 0.1a5 (2009-06-25)
 - Added support for the send_time parameter to the send command
 

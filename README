@@ -1,5 +1,5 @@
-PyTextMagicSMS 0.1a5
-====================
+PyTextMagicSMS 0.1
+==================
 
 This module provides a convenient interface to the TextMagic HTTPS API to send
 SMS messages.
@@ -13,8 +13,8 @@ The TextMagic HTTPS API is described at http://api.textmagic.com/https-api
 Documentation is available from the Python prompt:
   >>> help(textmagic)
   >>> help(textmagic.client)
-or from the project's website:
-  http://code.google.com/p/textmagic-sms-api-python/
+and from the project's website:
+  http://code.google.com/p/textmagic-sms-api-python/wiki/UserManual
 
 License
 =======
