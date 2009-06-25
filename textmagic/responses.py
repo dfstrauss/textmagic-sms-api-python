@@ -50,6 +50,13 @@ class DeleteReplyResponse(dict):
         for idx in xrange(len(self['deleted'])):
             self['deleted'][idx] = _cast_to_type(unicode, self['deleted'][idx])
 
+class CheckNumberResponse(dict):
+    def __init__(self, dict_):
+        super(CheckNumberResponse, self).__init__(dict_)
+        for key in self.iterkeys():
+            self[key]['price'] = _cast_to_type(float, self[key]['price'])
+            self[key]['country'] = _cast_to_type(unicode, self[key]['country'])
+
 class StatusCallbackResponse(dict):
     def __init__(self, dict_):
         super(StatusCallbackResponse, self).__init__(dict_)

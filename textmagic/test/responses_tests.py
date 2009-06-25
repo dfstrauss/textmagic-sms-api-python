@@ -127,6 +127,17 @@ class TextMagicResponseTests(unittest.TestCase):
         for message_id in response['deleted']:
             self.assertTrue(message_id.isdigit())
 
+    def testCheckNumberResponse(self):
+        message = json.loads('{\
+            "27123456789":{"price":0.5,"country":"ZA"},\
+            "44123456789":{"price":1,"country":"GB"}}')
+        response = textmagic.client.CheckNumberResponse(message)
+        self.assertTrue(set(response.keys()) == set(['27123456789', '44123456789']))
+        for number in response.iterkeys():
+            self.assertTrue(isinstance(response[number]['price'], float))
+            self.assertEquals(len(response[number]['country']), 2)
+            self.assertTrue(isinstance(response[number]['country'], unicode))
+
     def testErrorResponse(self):
         message = json.loads('{"error_code":15,"error_message":"Unicode symbols detected"}')
         response = textmagic.client.TextMagicError(message)

@@ -7,6 +7,7 @@ from textmagic.responses import AccountResponse
 from textmagic.responses import ReceiveResponse
 from textmagic.responses import MessageStatusResponse
 from textmagic.responses import DeleteReplyResponse
+from textmagic.responses import CheckNumberResponse
 from textmagic.responses import StatusCallbackResponse
 from textmagic.responses import ReplyCallbackResponse
 from textmagic.responses import TextMagicError
@@ -205,6 +206,26 @@ class _TextMagicClientBase(object):
           'cmd': 'delete_reply',
           'ids': ','.join([unicode(id) for id in ids])
         }, DeleteReplyResponse)
+
+    def check_number(self, phone):
+        """
+        Check the country and cost to send to one or more numbers.
+
+        Parameters:
+            phone - one phone number or a list of phone numbers
+
+        Return:
+            A textmagic.responses.CheckNumberResponse
+
+            response[id] is a dict:
+                message['price'] is the number of credits
+                message['country'] is the 2 letter country code
+        """
+        if not isinstance(phone, list): phone = [phone]
+        return self._execute_command({
+            'cmd': 'check_number',
+            'phone': ','.join([unicode(number) for number in phone])
+        }, dict) # CheckNumberResponse)
 
 class TextMagicClient(_TextMagicClientBase):
     """

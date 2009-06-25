@@ -25,6 +25,7 @@ import textmagic.test.account_tests
 import textmagic.test.message_status_tests
 import textmagic.test.receive_tests
 import textmagic.test.delete_reply_tests
+import textmagic.test.check_number_tests
 import textmagic.test.other_tests
 import textmagic.test.callbacks_tests
 import textmagic.test.responses_tests
@@ -71,6 +72,7 @@ def main():
         textmagic.test.receive_tests.ReceiveTests,
         textmagic.test.delete_reply_tests.DeleteReplyTests,
         textmagic.test.delete_reply_tests.DeleteReplyErrorsTests,
+        textmagic.test.check_number_tests.CheckNumberTests,
         textmagic.test.other_tests.ParameterErrorTests,
         textmagic.test.other_tests.Gsm0338CharacterSetTests,
         textmagic.test.callbacks_tests.CallbackUrlTests,
