@@ -170,30 +170,39 @@ class SendCharacterSetsTests(SendTestsBase):
                 expected_parts=2)
 
 class SendTimeTests(SendTestsBase):
-    def _time_now_plus_seconds(self, seconds):
+    def _time_now(self):
         if textmagic.test.running_live:
-            base_time = time.time()
+            return time.time()
         else:
-            base_time = 1245879223
-        return time.localtime(base_time + seconds)
+            return 1245879223
 
-    def testSendTimeInFuture(self):
+    def _sendTimeInFutureSucceeds(self, send_time):
         message = 'Message from the future'
-        send_time = self._time_now_plus_seconds(120)
         self.succeedingSendCase(
             message=message,
             numbers=ONE_TEST_NUMBER,
             expected_parts=1,
             send_time=send_time)
-    def testSendTimeInPast(self):
+    def _sendTimeInPastFails(self, send_time):
         message = 'Message from the past'
-        send_time = self._time_now_plus_seconds(-300)
+        time_in_message = not isinstance(send_time, time.struct_time)\
+                              and send_time\
+                              or time.mktime(send_time)
         self.failingSendCase(
             message=message,
             numbers=ONE_TEST_NUMBER,
             send_time=send_time,
             error_code=10,
-            error_message='Wrong parameter value %d for parameter send_time' % time.mktime(send_time))
+            error_message='Wrong parameter value %d for parameter send_time' % time_in_message)
+
+    def testSendTimeAsStructTimeInFutureSucceeds(self):
+        self._sendTimeInFutureSucceeds(time.localtime(self._time_now()+120))
+    def testSendTimeAsStructTimeInPastFails(self):
+        self._sendTimeInPastFails(time.localtime(self._time_now()-300))
+    def testSendTimeAsUnixTimeInFutureSucceeds(self):
+        self._sendTimeInFutureSucceeds(self._time_now()+120)
+    def testSendTimeAsUnixTimeInPastFails(self):
+        self._sendTimeInPastFails(self._time_now()-300)
 
 class SendErrorsTests(SendTestsBase):
     """

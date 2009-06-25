@@ -5,7 +5,7 @@ setup(
     version="0.1a5",
 
     description="TextMagic SMS API",
-    long_description="This is a Python wrapper for the TextMagic HTTPS API to send SMS messages",
+    long_description="A Python wrapper for the TextMagic HTTPS API to send SMS messages",
 
     author="Dawie Strauss",
     author_email="dfstrauss@gmail.com",

@@ -61,7 +61,7 @@ class _TextMagicClientBase(object):
         else:
             return ReplyCallbackResponse(params_dict)
 
-    def _executeCommand(self, params_dict, responseClass):
+    def _execute_command(self, params_dict, responseClass):
         response = self._submitRequest(params_dict)
         self._log_message("Response:     %s\n-----" % response)
         resp = json.loads(response)
@@ -72,6 +72,7 @@ class _TextMagicClientBase(object):
 
     def _send(self, text, phone, max_length, send_time, unicode_):
         if not isinstance(phone, list): phone = [phone]
+        if isinstance(send_time, time.struct_time): send_time = time.mktime(send_time)
         if unicode_ is None:
             if is_gsm(text): unicode_ = 0
             else: unicode_ = 1
@@ -84,8 +85,8 @@ class _TextMagicClientBase(object):
         if max_length is not None:
             params_dict['max_length'] = str(max_length)
         if send_time is not None:
-            params_dict['send_time'] = str(int(time.mktime(send_time)))
-        return self._executeCommand(params_dict, SendResponse)
+            params_dict['send_time'] = str(int(send_time))
+        return self._execute_command(params_dict, SendResponse)
 
     def send(self, text, phone, max_length=None, send_time=None):
         """
@@ -101,7 +102,8 @@ class _TextMagicClientBase(object):
             text - the message
             phone - one phone number or a list of numbers
             max_length - (optional) maximum parts to split the message into
-            send_time - (optional) time to send the message as time.struct_time
+            send_time - (optional) time to send the message as a
+                time.struct_time or as "seconds since the epoch"/Unix time
 
         Return:
             A textmagic.responses.SendResponse
@@ -129,7 +131,7 @@ class _TextMagicClientBase(object):
 
             response['balance'] is the number of credits in your account
         """
-        return self._executeCommand({
+        return self._execute_command({
             'cmd': 'account'
         }, AccountResponse)
 
@@ -158,7 +160,7 @@ class _TextMagicClientBase(object):
             response['unread'] is the number of unread messages in your Inbox
         """
         if not isinstance(ids, list): ids = [ids]
-        return self._executeCommand({
+        return self._execute_command({
             'cmd': 'message_status',
             'ids': ','.join([unicode(id) for id in ids])
         }, MessageStatusResponse)
@@ -181,7 +183,7 @@ class _TextMagicClientBase(object):
                 message['text'] is the text of the message
             response['unread'] is the number of unread messages in your Inbox
         """
-        return self._executeCommand({
+        return self._execute_command({
           'cmd': 'receive',
           'last_retrieved_id': unicode(last_retrieved_id)
         }, ReceiveResponse)
@@ -199,7 +201,7 @@ class _TextMagicClientBase(object):
             response['deleted'] is a list of message ids actually deleted
         """
         if not isinstance(ids, list): ids = [ids]
-        return self._executeCommand({
+        return self._execute_command({
           'cmd': 'delete_reply',
           'ids': ','.join([unicode(id) for id in ids])
         }, DeleteReplyResponse)
