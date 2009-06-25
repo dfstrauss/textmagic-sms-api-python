@@ -13,14 +13,15 @@ The TextMagic HTTPS API is described at http://api.textmagic.com/https-api
 
 An instance of the class textmagic.client.TextMagicClient must be instantiated
 with your TextMagic username and password. API commands are implemented as
-methods on this class. Currently implemented commands are:
+methods on this class.
+
+The API commands are:
     send
     account
     message_status
     receive
     delete_reply
-Outstanding functionality (coming soon) is:
-    check_number command
+    check_number
 
 Getting started
 ===============
