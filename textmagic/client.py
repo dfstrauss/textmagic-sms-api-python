@@ -225,7 +225,7 @@ class _TextMagicClientBase(object):
         return self._execute_command({
             'cmd': 'check_number',
             'phone': ','.join([unicode(number) for number in phone])
-        }, dict) # CheckNumberResponse)
+        }, CheckNumberResponse)
 
 class TextMagicClient(_TextMagicClientBase):
     """
