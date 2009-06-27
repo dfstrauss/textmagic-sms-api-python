@@ -1,4 +1,8 @@
 PyTextMagicSMS changelog
+========================
+
+0.1b2 (2009-06-28)
+- Updated help documentation in source code
 
 0.1b1 (2009-06-25)
 - Added check_number command
