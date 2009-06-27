@@ -181,8 +181,8 @@ Response:   {"error_code":3,"error_message":"Command is undefined"}
 Parameters:  username=username&password=password&cmd=send
 Response:   {"error_code":4,"error_message":"Insufficient parameters"}
 (9).(1) testCheckOneNumber
-Parameters:   username=dfstrauss&phone=27123456789&password=N7J6QcGMkOr8deK&cmd=check_number
+Parameters:   username=username&phone=27123456789&password=password&cmd=check_number
 Response:     {"27123456789":{"price":0.5,"country":"ZA"}}
 (9).(2) testCheckTwoNumbers
-Parameters:   username=dfstrauss&phone=27123456789%2C44123456789&password=N7J6QcGMkOr8deK&cmd=check_number
+Parameters:   username=username&phone=27123456789%2C44123456789&password=password&cmd=check_number
 Response:     {"27123456789":{"price":0.5,"country":"ZA"},"44123456789":{"price":0.8,"country":"GB"}}
