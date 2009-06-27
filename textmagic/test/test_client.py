@@ -2,6 +2,10 @@
 Run tests for the TextMagic python API wrapper. Tests can be run "live"
 against the TextMagic system, or against a "local" mock implementation.
 
+When running "live" certain tests are omitted, because they cannot run "live"
+unchanged. E.g. "delete" tests have hard-coded message ids which they try to
+delete.
+
 Parameters:
 -h --help       Print this message
 -l --live       Run tests "live" against TextMagic system (otherwise run
@@ -29,6 +33,8 @@ import textmagic.test.check_number_tests
 import textmagic.test.other_tests
 import textmagic.test.callbacks_tests
 import textmagic.test.responses_tests
+
+from textmagic.test import LiveUnsafeTests
 
 def usage():
     print "Usage: test_client.py\n%s" % __doc__
@@ -69,7 +75,9 @@ def main():
         textmagic.test.send_tests.SendErrorsTests,
         textmagic.test.account_tests.AccountTests,
         textmagic.test.message_status_tests.MessageStatusTests,
+        textmagic.test.message_status_tests.LiveUnsafeMessageStatusTests,
         textmagic.test.receive_tests.ReceiveTests,
+        textmagic.test.receive_tests.LiveUnsafeReceiveTests,
         textmagic.test.delete_reply_tests.DeleteReplyTests,
         textmagic.test.delete_reply_tests.DeleteReplyErrorsTests,
         textmagic.test.check_number_tests.CheckNumberTests,
@@ -83,7 +91,10 @@ def main():
 #        textmagic.test.send_tests.BasicSendTests,
 #    ]
     for test in tests:
-        suite.addTest(unittest.makeSuite(test))
+        if (textmagic.test.running_live and\
+            not LiveUnsafeTests in test.__bases__) or\
+            not textmagic.test.running_live:
+                suite.addTest(unittest.makeSuite(test))
 
     unittest.TextTestRunner(verbosity=2).run(suite)
 

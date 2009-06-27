@@ -140,6 +140,9 @@ Response:    {"messages":[{"message_id":"1787571","from":"27829991111","timestam
 5.(5) testReceiveUnicodeMessage
 Parameters:  username=username&cmd=receive&password=password&last_retrieved_id=2
 Response:    {"messages":[{"message_id":"1787603","from":"27829991111","timestamp":1243635007,"text":"\u2800\u2801\u2802\u2803 \u27f0"}],"unread":0}
+5.(6) testReceiveWhateverThereIs
+Parameters:  username=username&cmd=receive&password=password&last_retrieved_id=3
+Response:    {"messages":[{"message_id":"1787571","from":"27829991111","timestamp":1243633179,"text":"Four"},{"message_id":"1787582","from":"27829991111","timestamp":1243633933,"text":"Gsgdgdgdgdgdgdsgdsbsndgsadgdhsghsgdsehdndhbmshesnsebmsdwegsbmhwgwenmsweghbsghseheshwggenwbwgsdwebhhwebwfhsbeghbsghwghbswegbwbhghesbwegegbweggnwegwgwgegwh"},{"message_id":"1787583","from":"27829991111","timestamp":1243633934,"text":"wggwhbsehgwhwhnhgwehegwgwhehegwegwegegwg"},{"message_id":"1787603","from":"27829991111","timestamp":1243635007,"text":"\u2800\u2801\u2802\u2803 \u27f0"}],"unread":0}
 6.1 testDeleteOneMessage
 Parameters:  username=username&cmd=delete_reply&password=password&ids=1787522
 Response:   {"deleted":["1787522"]}

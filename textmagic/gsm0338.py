@@ -1,4 +1,7 @@
 """
+Check whether a string consists entirely of characters in the GSM 03.38
+character set.
+
 GSM 03.38 character set mapping to Unicode is specified here:
     http://unicode.org/Public/MAPPINGS/ETSI/GSM0338.TXT
 This code was translated from the C++ snippet at:

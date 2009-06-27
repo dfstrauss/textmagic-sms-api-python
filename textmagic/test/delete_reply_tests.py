@@ -1,7 +1,8 @@
 from textmagic.test import TextMagicTestsBase
+from textmagic.test import LiveUnsafeTests
 from textmagic.client import TextMagicError
 
-class DeleteReplyTests(TextMagicTestsBase):
+class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
 
     def deleteIds(self, ids):
         result = self.client.delete_reply(ids)

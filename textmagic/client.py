@@ -1,3 +1,21 @@
+"""
+The TextMagicClient class implements the TextMagic HTTPS API.
+
+An application must instantiate a TextMagicClient object, initializing it
+with a username and password. Now the API can be used by calling methods
+on this instance.
+
+The API is implemented on the _TextMagicClientBase class.
+
+The TextMagicClient class derives from _TextMagicClientBase and implements
+the "message transport"; i.e. making the HTTPS request and receiving a
+response.
+
+Other classes can derive from _TextMagicClientBase to implement alternative
+"transport mechanisms". The only known use of this is for testing where
+a "mock-responder" can be built this way.
+"""
+
 import urllib
 import urllib2
 import time
@@ -239,6 +257,7 @@ class TextMagicClient(_TextMagicClientBase):
         - message_status
         - receive
         - delete_reply
+        - check_number
     And you can interpret callback notifications by calling:
         - callbackMessage
     """

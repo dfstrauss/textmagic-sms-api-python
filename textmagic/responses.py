@@ -1,3 +1,22 @@
+"""
+This file implements the response messages returned from TextMagic API calls.
+
+Each response class is named after its API call:
+ - SendResponse
+ - AccountResponse
+ - ReceiveResponse
+ - MessageStatusResponse
+ - DeleteReplyResponse
+ - CheckNumberResponse
+
+The two types of notification messages are:
+ - StatusCallbackResponse
+ - ReplyCallbackResponse
+
+There is also an Exception (TextMagicError) which is raised when an API
+error occurs.
+"""
+
 import time
 
 def _cast_to_type(type, value):

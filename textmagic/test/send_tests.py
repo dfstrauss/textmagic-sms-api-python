@@ -12,9 +12,11 @@ from textmagic.test import MAX_UNICODE_SMS_LENGTH
 from textmagic.test import MAX_UNICODE_MULTI_SMS_LENGTH
 from textmagic.test import A_UNICODE_CHARACTER
 
+from textmagic.test import TextMagicTestsBase
+
 from textmagic.client import TextMagicError
 
-class SendTestsBase(textmagic.test.TextMagicTestsBase):
+class SendTestsBase(TextMagicTestsBase):
     """
     Abstract class implementing a generic succeeding and failing "send" test case
     """

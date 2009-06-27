@@ -4,8 +4,9 @@ from textmagic.test import ONE_TEST_NUMBER
 from textmagic.test import THREE_TEST_NUMBERS
 
 from textmagic.test import TextMagicTestsBase
+from textmagic.test import LiveUnsafeTests
 
-class MessageStatusTests(TextMagicTestsBase):
+class MessageStatusTestsBase(TextMagicTestsBase):
     def sendAndCheckStatusTo(self, numbers):
         message = 'sdfqwersdfgfdg'
         result = self.client.send(message, numbers)
@@ -38,11 +39,18 @@ class MessageStatusTests(TextMagicTestsBase):
             statuses.append(status['status'])
         return statuses
 
+class MessageStatusTests(MessageStatusTestsBase):
     def testMessageStatusWhenSendingOneMessage(self):
         self.sendAndCheckStatusTo(ONE_TEST_NUMBER)
     def testMessageStatusWhenSendingThreeMessages(self):
         self.sendAndCheckStatusTo(THREE_TEST_NUMBERS)
 
+class LiveUnsafeMessageStatusTests(MessageStatusTestsBase, LiveUnsafeTests):
+    """
+    This test is live-unsafe because it is intended to be sent to a real
+    telephone number. It keeps asking for message status until it receives
+    a "delivered" response.
+    """
     def testMessageStatusWhenPhoneIsSwitchedOff(self):
         ids, message = self.sendAndCheckStatusTo(['27991114444'])
         while True:
