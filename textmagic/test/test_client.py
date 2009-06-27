@@ -61,9 +61,6 @@ def main():
         else:
             assert False, "unhandled option"
 
-    if (textmagic.test.client_class <> textmagic.client.TextMagicClient):
-        textmagic.test.log_executed_commands = False
-
     suite = unittest.TestSuite()
     tests = [
         textmagic.test.send_tests.BasicSendTests,
@@ -91,6 +88,7 @@ def main():
 #        textmagic.test.send_tests.BasicSendTests,
 #    ]
     for test in tests:
+        # Filter out live-unsafe tests when running live
         if (textmagic.test.running_live and\
             not LiveUnsafeTests in test.__bases__) or\
             not textmagic.test.running_live:
