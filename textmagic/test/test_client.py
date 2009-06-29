@@ -6,6 +6,9 @@ When running "live" certain tests are omitted, because they cannot run "live"
 unchanged. E.g. "delete" tests have hard-coded message ids which they try to
 delete.
 
+Also when tests run "live", all requests and responses are logged to a file
+called executed_commands.log
+
 Parameters:
 -h --help       Print this message
 -l --live       Run tests "live" against TextMagic system (otherwise run

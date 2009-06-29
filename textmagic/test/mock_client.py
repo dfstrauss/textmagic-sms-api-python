@@ -1,3 +1,16 @@
+"""
+This module contains one class MockTextMagicClient to run tests against.
+
+The MockTextMagicClient class implements the same interface as the "real"
+TextMagicClient class. It is used to run tests without the need for connecting
+to the live system.
+
+On startup, MockTextMagicClient reads a file called mock_client_scenarios.txt
+containing requests and responses as needed by the tests. New scenarios can be
+collected for this file by running "live" tests and copying scenarios from
+executed_commands.log.
+
+"""
 import urllib
 
 from textmagic.client import _TextMagicClientBase
