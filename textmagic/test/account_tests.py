@@ -4,8 +4,8 @@ class AccountTests(TextMagicTestsBase):
     def testAccount(self):
         result = self.client.account()
         expected_keys = set(['balance'])
-        self.assertEquals(set(result.keys()), expected_keys)
+        self.assertEquals(set(result), expected_keys)
         try:
             float(result['balance'])
-        except:
+        except TypeError:
             self.fail('balance should be a float!')

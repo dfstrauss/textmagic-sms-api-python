@@ -7,7 +7,7 @@ class ReceiveTestsBase(TextMagicTestsBase):
     def receiveMessages(self, id_in, more_expected=True, expected_text=None):
         result = self.client.receive(id_in)
         expected_keys = set(['messages', 'unread'])
-        self.assertEquals(set(result.keys()), expected_keys)
+        self.assertEquals(set(result), expected_keys)
         self.assertEquals(result['unread'], 0)
         if not more_expected:
             self.assertEquals(len(result['messages']), 0)
@@ -15,7 +15,7 @@ class ReceiveTestsBase(TextMagicTestsBase):
         message_ids = []
         for message in result['messages']:
             expected_keys = set(['message_id', 'from', 'timestamp', 'text'])
-            self.assertEquals(set(message.keys()), expected_keys)
+            self.assertEquals(set(message), expected_keys)
             self.assertTrue(message['message_id'].isdigit())
             self.assertTrue(isinstance(message['from'], unicode))
             self.assertTrue(isinstance(message['text'], unicode))

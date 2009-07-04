@@ -8,7 +8,7 @@ class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
         result = self.client.delete_reply(ids)
         if not isinstance(ids, list): ids = [ids]
         expected_keys = set(['deleted'])
-        self.assertEquals(set(result.keys()), expected_keys)
+        self.assertEquals(set(result), expected_keys)
         self.assertEquals(set(result['deleted']), set([unicode(id) for id in ids]))
 
     def testDeleteOneMessage(self):

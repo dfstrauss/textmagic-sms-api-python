@@ -33,7 +33,7 @@ class SendResponse(dict):
         self['sent_text'] = _cast_to_type(unicode, self['sent_text'])
         self['parts_count'] = _cast_to_type(int, self['parts_count'])
         assert len(self['message_id']), 'Invalid server response - message_id cannot be empty!'
-        for key in self['message_id'].iterkeys():
+        for key in self['message_id']:
             self['message_id'][key] = _cast_to_type(unicode, self['message_id'][key])
 
 class AccountResponse(dict):
@@ -54,7 +54,7 @@ class ReceiveResponse(dict):
 class MessageStatusResponse(dict):
     def __init__(self, dict_):
         super(MessageStatusResponse, self).__init__(dict_)
-        for key in self.iterkeys():
+        for key in self:
             self[key]['text'] = _cast_to_type(unicode, self[key]['text'])
             self[key]['status'] = _cast_to_type(unicode, self[key]['status'])
             self[key]['created_time'] = _time_or_none(self[key]['created_time'])
@@ -72,7 +72,7 @@ class DeleteReplyResponse(dict):
 class CheckNumberResponse(dict):
     def __init__(self, dict_):
         super(CheckNumberResponse, self).__init__(dict_)
-        for key in self.iterkeys():
+        for key in self:
             self[key]['price'] = _cast_to_type(float, self[key]['price'])
             self[key]['country'] = _cast_to_type(unicode, self[key]['country'])
 

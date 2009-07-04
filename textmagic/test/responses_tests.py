@@ -16,7 +16,7 @@ class TextMagicResponseTests(unittest.TestCase):
             "sent_text":"Test Message",\
             "parts_count":1}')
         response = textmagic.client.SendResponse(message)
-        self.assertTrue(set(response.keys()) == set(['message_id', 'sent_text', 'parts_count']))
+        self.assertTrue(set(response) == set(['message_id', 'sent_text', 'parts_count']))
         self.assertTrue(isinstance(response['message_id'], dict))
         self.assertEquals(response['sent_text'], "Test Message")
         self.assertEquals(response['parts_count'], 1)
@@ -50,7 +50,7 @@ class TextMagicResponseTests(unittest.TestCase):
             "text":"\u2800\u2801\u2802\u2803 \u27f0"}],\
             "unread":0}')
         response = textmagic.client.ReceiveResponse(message)
-        self.assertTrue(set(response.keys()) == set(['messages', 'unread']))
+        self.assertTrue(set(response) == set(['messages', 'unread']))
         self.assertTrue(len(response['messages']) == 2)
         self.assertEquals(response['unread'], 0)
         self.assertTrue(isinstance(response['messages'], list))
@@ -132,8 +132,8 @@ class TextMagicResponseTests(unittest.TestCase):
             "27123456789":{"price":0.5,"country":"ZA"},\
             "44123456789":{"price":1,"country":"GB"}}')
         response = textmagic.client.CheckNumberResponse(message)
-        self.assertTrue(set(response.keys()) == set(['27123456789', '44123456789']))
-        for number in response.iterkeys():
+        self.assertTrue(set(response) == set(['27123456789', '44123456789']))
+        for number in response:
             self.assertTrue(isinstance(response[number]['price'], float))
             self.assertEquals(len(response[number]['country']), 2)
             self.assertTrue(isinstance(response[number]['country'], unicode))

@@ -26,11 +26,11 @@ class SendTestsBase(TextMagicTestsBase):
     def succeedingSendCase(self, message, numbers, expected_parts, max_length=None, send_time=None, unicode=None):
         result = self.client._send(message, numbers, max_length, send_time, unicode)
         if not isinstance(numbers, list): numbers=[numbers]
-        self.assertEquals(set(result.keys()), self.expected_keys)
+        self.assertEquals(set(result), self.expected_keys)
         self.assertEquals(result['sent_text'], message)
         self.assertEquals(len(result['message_id']), len(numbers))
         self.assertEquals(set(result['message_id'].values()), set(numbers))
-        for message_id in result['message_id'].keys():
+        for message_id in result['message_id']:
             self.assertTrue(message_id.isdigit())
         self.assertEquals(result['parts_count'], expected_parts)
 
@@ -69,7 +69,7 @@ class BasicSendTests(SendTestsBase):
         message='Test Message'
         number = ONE_TEST_NUMBER
         result = self.client.send(message, number)
-        self.assertEquals(set(result.keys()), self.expected_keys)
+        self.assertEquals(set(result), self.expected_keys)
         self.assertEquals(result['sent_text'], message)
         self.assertEquals(len(result['message_id']), 1)
 
@@ -77,7 +77,7 @@ class BasicSendTests(SendTestsBase):
         message=u'\u2800\u2801\u2802\u2803 \u27F0'
         number = ONE_TEST_NUMBER
         result = self.client.send(message, number)
-        self.assertEquals(set(result.keys()), self.expected_keys)
+        self.assertEquals(set(result), self.expected_keys)
         self.assertEquals(result['sent_text'], message)
         self.assertEquals(len(result['message_id']), 1)
 
