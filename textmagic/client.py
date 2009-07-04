@@ -81,7 +81,7 @@ class _TextMagicClientBase(object):
             return ReplyCallbackResponse(params_dict)
 
     def _execute_command(self, params_dict, responseClass):
-        response = self._submitRequest(params_dict)
+        response = self._submit_request(params_dict)
         self._log_message("Response:     %s\n-----" % response)
         resp = json.loads(response)
         if resp.has_key('error_code'):
@@ -270,7 +270,7 @@ class TextMagicClient(_TextMagicClientBase):
         """
         super(TextMagicClient, self).__init__(username, password)
 
-    def _submitRequest(self, params_dict):
+    def _submit_request(self, params_dict):
         params_dict['username'] = self.username
         params_dict['password'] = self.password
         params = urllib.urlencode(params_dict)
