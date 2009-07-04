@@ -16,20 +16,19 @@ class MessageStatusTestsBase(TextMagicTestsBase):
 
     def getStatus(self, ids, message):
         result = self.client.message_status(ids)
-        expected_keys = set(ids)
-        self.assertEquals(set(result), expected_keys)
+        self.assertKeysEqualExpectedKeys(result, ids)
         statuses = []
         for id in ids:
             status = result[id]
-            expected_keys = set(['status', 'text', 'reply_number', 'created_time'])
+            expected_keys = ['status', 'text', 'reply_number', 'created_time']
             if (len(status) == 4):
                 pass
             elif (len(status) == 6):
-                expected_keys.add('completed_time')
-                expected_keys.add('credits_cost')
+                expected_keys.append('completed_time')
+                expected_keys.append('credits_cost')
             else:
                 self.fail("Unexpected number of return parameters: %s" % len(status))
-            self.assertEquals(set(status), expected_keys)
+            self.assertKeysEqualExpectedKeys(status, expected_keys)
             self.assertEquals(status['text'], message)
             self.assertEquals(status['reply_number'], '447624800500')
             self.assertTrue(isinstance(status['created_time'], time.struct_time))

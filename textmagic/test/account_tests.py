@@ -3,8 +3,7 @@ from textmagic.test import TextMagicTestsBase
 class AccountTests(TextMagicTestsBase):
     def testAccount(self):
         result = self.client.account()
-        expected_keys = set(['balance'])
-        self.assertEquals(set(result), expected_keys)
+        self.assertKeysEqualExpectedKeys(result, ['balance'])
         try:
             float(result['balance'])
         except TypeError:

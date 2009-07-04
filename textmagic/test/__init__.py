@@ -40,6 +40,9 @@ class TextMagicTestsBase(unittest.TestCase):
         self.client = client_class(api_username, api_password)
         self.client.logging = log_executed_commands
 
+    def assertKeysEqualExpectedKeys(self, received_keys, expected_keys):
+        self.assertEquals(set(received_keys), set(expected_keys))
+
 class LiveUnsafeTests(object):
     """
     A test class must inherit from this class if its tests cannot run "live".

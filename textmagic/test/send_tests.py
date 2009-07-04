@@ -21,12 +21,12 @@ class SendTestsBase(TextMagicTestsBase):
     Abstract class implementing a generic succeeding and failing "send" test case
     """
 
-    expected_keys = set(['sent_text', 'message_id', 'parts_count'])
+    expected_keys = ['sent_text', 'message_id', 'parts_count']
 
     def succeedingSendCase(self, message, numbers, expected_parts, max_length=None, send_time=None, unicode=None):
         result = self.client._send(message, numbers, max_length, send_time, unicode)
         if not isinstance(numbers, list): numbers=[numbers]
-        self.assertEquals(set(result), self.expected_keys)
+        self.assertKeysEqualExpectedKeys(result, self.expected_keys)
         self.assertEquals(result['sent_text'], message)
         self.assertEquals(len(result['message_id']), len(numbers))
         self.assertEquals(set(result['message_id'].values()), set(numbers))
@@ -66,18 +66,18 @@ class BasicSendTests(SendTestsBase):
             expected_parts=1)
 
     def testSendCanBeCalledWithoutOptionalParametersGsm0338(self):
-        message='Test Message'
+        message = 'Test Message'
         number = ONE_TEST_NUMBER
         result = self.client.send(message, number)
-        self.assertEquals(set(result), self.expected_keys)
+        self.assertKeysEqualExpectedKeys(result, self.expected_keys)
         self.assertEquals(result['sent_text'], message)
         self.assertEquals(len(result['message_id']), 1)
 
     def testSendCanBeCalledWithoutOptionalParametersUnicode(self):
-        message=u'\u2800\u2801\u2802\u2803 \u27F0'
+        message = u'\u2800\u2801\u2802\u2803 \u27F0'
         number = ONE_TEST_NUMBER
         result = self.client.send(message, number)
-        self.assertEquals(set(result), self.expected_keys)
+        self.assertKeysEqualExpectedKeys(result, self.expected_keys)
         self.assertEquals(result['sent_text'], message)
         self.assertEquals(len(result['message_id']), 1)
 
