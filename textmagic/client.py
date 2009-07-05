@@ -92,11 +92,12 @@ class _TextMagicClientBase(object):
             return responseClass(resp)
 
     def _send(self, text, phone, max_length, send_time, unicode_):
-        if not isinstance(phone, list): phone = [phone]
-        if isinstance(send_time, time.struct_time): send_time = time.mktime(send_time)
+        if not isinstance(phone, list):
+            phone = [phone]
+        if isinstance(send_time, time.struct_time):
+            send_time = time.mktime(send_time)
         if unicode_ is None:
-            if is_gsm(text): unicode_ = 0
-            else: unicode_ = 1
+            unicode_ = is_gsm(text) and '0' or '1'
         params_dict = {
           'cmd': 'send',
           'text': text.encode('utf-8'),
@@ -137,8 +138,7 @@ class _TextMagicClientBase(object):
                 split into
 
         """
-        if is_gsm(text): unicode_ = 0
-        else: unicode_ = 1
+        unicode_ = is_gsm(text) and '0' or '1'
         return self._send(text, phone, max_length, send_time, unicode_)
 
     def account(self):
@@ -183,7 +183,8 @@ class _TextMagicClientBase(object):
             response['unread'] is the number of unread messages in your Inbox
 
         """
-        if not isinstance(ids, list): ids = [ids]
+        if not isinstance(ids, list):
+            ids = [ids]
         return self._execute_command({
             'cmd': 'message_status',
             'ids': ','.join([unicode(id) for id in ids])
@@ -226,7 +227,8 @@ class _TextMagicClientBase(object):
             response['deleted'] is a list of message ids actually deleted
 
         """
-        if not isinstance(ids, list): ids = [ids]
+        if not isinstance(ids, list):
+            ids = [ids]
         return self._execute_command({
           'cmd': 'delete_reply',
           'ids': ','.join([unicode(id) for id in ids])
@@ -247,7 +249,8 @@ class _TextMagicClientBase(object):
                 message['country'] is the 2 letter country code
 
         """
-        if not isinstance(phone, list): phone = [phone]
+        if not isinstance(phone, list):
+            phone = [phone]
         return self._execute_command({
             'cmd': 'check_number',
             'phone': ','.join([unicode(number) for number in phone])

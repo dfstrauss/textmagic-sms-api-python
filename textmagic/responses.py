@@ -21,11 +21,13 @@ error occurs.
 import time
 
 def _cast_to_type(type, value):
-    if value is None: return None
+    if value is None:
+        return None
     return type(value)
 
 def _time_or_none(value):
-    if value is None: return None
+    if value is None:
+        return None
     return time.localtime(float(value))
 
 

@@ -7,7 +7,8 @@ class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
 
     def deleteIds(self, ids):
         response = self.client.delete_reply(ids)
-        if not isinstance(ids, list): ids = [ids]
+        if not isinstance(ids, list):
+            ids = [ids]
         self.assertKeysEqualExpectedKeys(response, ['deleted'])
         self.assertEquals(
             set(response['deleted']),

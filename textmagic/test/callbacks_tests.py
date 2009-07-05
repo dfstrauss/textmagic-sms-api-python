@@ -10,10 +10,10 @@ class CallbackUrlTests(TextMagicTestsBase):
 
     def testStatusCallback(self):
         post_params = {
-            'status' : "d",
-            'message_id' : "8714718",
-            'timestamp' : "1243797781",
-            'credits_cost' : "1",
+            'status': "d",
+            'message_id': "8714718",
+            'timestamp': "1243797781",
+            'credits_cost': "1",
         }
         response = self.client.callback_message(post_params)
         self.assertTrue(isinstance(response, StatusCallbackResponse))
@@ -30,10 +30,10 @@ class CallbackUrlTests(TextMagicTestsBase):
 
     def testReceivedCallback(self):
         post_params = {
-            'message_id' : "1788907",
-            'text' : "Test Reply Message",
-            'timestamp' : "1243837563",
-            'from' : "27991114444",
+            'message_id': "1788907",
+            'text': "Test Reply Message",
+            'timestamp': "1243837563",
+            'from': "27991114444",
         }
         response = self.client.callback_message(post_params)
         self.assertTrue(isinstance(response, ReplyCallbackResponse))
@@ -50,10 +50,10 @@ class CallbackUrlTests(TextMagicTestsBase):
 
     def testReceivedCallbackWithUnicodeText(self):
         post_params = {
-            'message_id' : "1788907",
-            'text' : "\xE2\xA0\x80",
-            'timestamp' : "1243837563",
-            'from' : "27991114444",
+            'message_id': "1788907",
+            'text': "\xE2\xA0\x80",
+            'timestamp': "1243837563",
+            'from': "27991114444",
         }
         response = self.client.callback_message(post_params)
         self.assertTrue(isinstance(response, ReplyCallbackResponse))

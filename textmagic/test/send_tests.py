@@ -29,7 +29,8 @@ class SendTestsBase(TextMagicTestsBase):
     def succeedingSendCase(self, message, numbers, expected_parts,
                             max_length=None, send_time=None, unicode=None):
         response = self.client._send(message, numbers, max_length, send_time, unicode)
-        if not isinstance(numbers, list): numbers=[numbers]
+        if not isinstance(numbers, list):
+            numbers=[numbers]
         self.assertKeysEqualExpectedKeys(response, self.expected_keys)
         self.assertEquals(response['sent_text'], message)
         self.assertEquals(len(response['message_id']), len(numbers))
