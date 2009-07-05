@@ -28,15 +28,15 @@ class SendTestsBase(TextMagicTestsBase):
 
     def succeedingSendCase(self, message, numbers, expected_parts,
                             max_length=None, send_time=None, unicode=None):
-        result = self.client._send(message, numbers, max_length, send_time, unicode)
+        response = self.client._send(message, numbers, max_length, send_time, unicode)
         if not isinstance(numbers, list): numbers=[numbers]
-        self.assertKeysEqualExpectedKeys(result, self.expected_keys)
-        self.assertEquals(result['sent_text'], message)
-        self.assertEquals(len(result['message_id']), len(numbers))
-        self.assertEquals(set(result['message_id'].values()), set(numbers))
-        for message_id in result['message_id']:
+        self.assertKeysEqualExpectedKeys(response, self.expected_keys)
+        self.assertEquals(response['sent_text'], message)
+        self.assertEquals(len(response['message_id']), len(numbers))
+        self.assertEquals(set(response['message_id'].values()), set(numbers))
+        for message_id in response['message_id']:
             self.assertTrue(message_id.isdigit())
-        self.assertEquals(result['parts_count'], expected_parts)
+        self.assertEquals(response['parts_count'], expected_parts)
 
     def failingSendCase(self, message, numbers, error_code, error_message,
                         max_length=None, send_time=None, unicode=None):
@@ -75,18 +75,18 @@ class BasicSendTests(SendTestsBase):
     def testSendCanBeCalledWithoutOptionalParametersGsm0338(self):
         message = 'Test Message'
         number = ONE_TEST_NUMBER
-        result = self.client.send(message, number)
-        self.assertKeysEqualExpectedKeys(result, self.expected_keys)
-        self.assertEquals(result['sent_text'], message)
-        self.assertEquals(len(result['message_id']), 1)
+        response = self.client.send(message, number)
+        self.assertKeysEqualExpectedKeys(response, self.expected_keys)
+        self.assertEquals(response['sent_text'], message)
+        self.assertEquals(len(response['message_id']), 1)
 
     def testSendCanBeCalledWithoutOptionalParametersUnicode(self):
         message = u'\u2800\u2801\u2802\u2803 \u27F0'
         number = ONE_TEST_NUMBER
-        result = self.client.send(message, number)
-        self.assertKeysEqualExpectedKeys(result, self.expected_keys)
-        self.assertEquals(result['sent_text'], message)
-        self.assertEquals(len(result['message_id']), 1)
+        response = self.client.send(message, number)
+        self.assertKeysEqualExpectedKeys(response, self.expected_keys)
+        self.assertEquals(response['sent_text'], message)
+        self.assertEquals(len(response['message_id']), 1)
 
 
 class MultipartSendTests(SendTestsBase):

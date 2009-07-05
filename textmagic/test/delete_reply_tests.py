@@ -6,10 +6,12 @@ from textmagic.client import TextMagicError
 class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
 
     def deleteIds(self, ids):
-        result = self.client.delete_reply(ids)
+        response = self.client.delete_reply(ids)
         if not isinstance(ids, list): ids = [ids]
-        self.assertKeysEqualExpectedKeys(result, ['deleted'])
-        self.assertEquals(set(result['deleted']), set([unicode(id) for id in ids]))
+        self.assertKeysEqualExpectedKeys(response, ['deleted'])
+        self.assertEquals(
+            set(response['deleted']),
+            set([unicode(id) for id in ids]))
 
     def testDeleteOneMessage(self):
         self.deleteIds(1787522)

@@ -28,8 +28,8 @@ Getting started
 
 To send a message:
     client = textmagic.client.TextMagicClient('username', 'password')
-    result = client.send("A test message", "9991234444")
-    message_id = result['message_id'].keys()[0]
+    response = client.send("A test message", "9991234444")
+    message_id = response['message_id'].keys()[0]
 
 Use the message_id to get the delivery status of your message:
     response = client.message_status(message_id)

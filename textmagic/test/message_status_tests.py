@@ -11,17 +11,17 @@ class MessageStatusTestsBase(TextMagicTestsBase):
 
     def sendAndCheckStatusTo(self, numbers):
         message = 'sdfqwersdfgfdg'
-        result = self.client.send(message, numbers)
-        ids = result['message_id'].keys()
+        response = self.client.send(message, numbers)
+        ids = response['message_id'].keys()
         self.getStatus(ids, message)
         return (ids, message)
 
     def getStatus(self, ids, message):
-        result = self.client.message_status(ids)
-        self.assertKeysEqualExpectedKeys(result, ids)
+        response = self.client.message_status(ids)
+        self.assertKeysEqualExpectedKeys(response, ids)
         statuses = []
         for id in ids:
-            status = result[id]
+            status = response[id]
             expected_keys = ['status', 'text', 'reply_number', 'created_time']
             if (len(status) == 4):
                 pass

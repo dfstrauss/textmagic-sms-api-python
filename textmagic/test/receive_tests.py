@@ -7,14 +7,14 @@ from textmagic.test import LiveUnsafeTests
 class ReceiveTestsBase(TextMagicTestsBase):
 
     def receiveMessages(self, id_in, more_expected=True, expected_text=None):
-        result = self.client.receive(id_in)
-        self.assertKeysEqualExpectedKeys(result, ['messages', 'unread'])
-        self.assertEquals(result['unread'], 0)
+        response = self.client.receive(id_in)
+        self.assertKeysEqualExpectedKeys(response, ['messages', 'unread'])
+        self.assertEquals(response['unread'], 0)
         if not more_expected:
-            self.assertEquals(len(result['messages']), 0)
+            self.assertEquals(len(response['messages']), 0)
             return
         message_ids = []
-        for message in result['messages']:
+        for message in response['messages']:
             self.assertKeysEqualExpectedKeys(message,
                 ['message_id', 'from', 'timestamp', 'text'])
             self.assertTrue(message['message_id'].isdigit())
