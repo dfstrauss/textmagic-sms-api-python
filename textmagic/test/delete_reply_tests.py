@@ -2,6 +2,7 @@ from textmagic.test import TextMagicTestsBase
 from textmagic.test import LiveUnsafeTests
 from textmagic.client import TextMagicError
 
+
 class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
 
     def deleteIds(self, ids):
@@ -24,10 +25,13 @@ class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
             self.assertEquals(e.error_code, 14)
             self.assertEquals(e.error_message, 'Message with id 1787548, 1787573 does not exist')
 
+
 class DeleteReplyErrorsTests(TextMagicTestsBase):
     """
-    Test error messages on deleting
+    Test error messages on deleting.
+
     """
+
     def testTryingToDeleteTooManyItems(self):
         try:
             self.client.delete_reply(['5111%03d'%num for num in xrange(101)])

@@ -5,6 +5,7 @@ All tests derive from TextMagicTestsBase.
 
 The LiveUnsafeTests class is a "marker" for tests that cannot be run "live"
 unchanged.
+
 """
 import unittest
 import time
@@ -30,18 +31,22 @@ running_live=False
 def gmtime_from_localtime(localtime):
     return time.gmtime(time.mktime(localtime))
 
+
 class TextMagicTestsBase(unittest.TestCase):
     """
     The base class for TextMagic tests.
 
     It contains the setUp method which instantiates a client for each test.
+
     """
+
     def setUp(self):
         self.client = client_class(api_username, api_password)
         self.client.logging = log_executed_commands
 
     def assertKeysEqualExpectedKeys(self, received_keys, expected_keys):
         self.assertEquals(set(received_keys), set(expected_keys))
+
 
 class LiveUnsafeTests(object):
     """
@@ -51,5 +56,7 @@ class LiveUnsafeTests(object):
     it indicates that those tests cannot run "live" as they are. It might
     be simply impossible to run them "live" or they might be able to run "live"
     with some code changes.
+
     """
+
     pass

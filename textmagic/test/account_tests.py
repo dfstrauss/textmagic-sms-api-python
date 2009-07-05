@@ -1,5 +1,6 @@
 from textmagic.test import TextMagicTestsBase
 
+
 class AccountTests(TextMagicTestsBase):
     def testAccount(self):
         result = self.client.account()

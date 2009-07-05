@@ -7,7 +7,9 @@ json = import_json()
 import textmagic
 from textmagic.test import gmtime_from_localtime
 
+
 class TextMagicResponseTests(unittest.TestCase):
+
     def testSendResponse(self):
         message = json.loads('{"message_id":\
             {"8709767":"9993331234",\
@@ -144,4 +146,3 @@ class TextMagicResponseTests(unittest.TestCase):
         self.assertTrue(isinstance(response, Exception))
         self.assertTrue(isinstance(response.error_code, int))
         self.assertTrue(isinstance(response.error_message, unicode))
-

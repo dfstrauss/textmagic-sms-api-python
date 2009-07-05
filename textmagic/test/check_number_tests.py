@@ -1,5 +1,6 @@
 from textmagic.test import TextMagicTestsBase
 
+
 class CheckNumberTests(TextMagicTestsBase):
 
     za_number = '27123456789'

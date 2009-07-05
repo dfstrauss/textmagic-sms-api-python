@@ -5,7 +5,9 @@ from textmagic.client import SendResponse
 from textmagic.client import TextMagicError
 from textmagic.gsm0338 import is_gsm
 
+
 class ParameterErrorTests(TextMagicTestsBase):
+
     def testWrongCommandFails(self):
         try:
             self.client._execute_command({'cmd': 'nonexistent_command'}, SendResponse)
@@ -22,7 +24,9 @@ class ParameterErrorTests(TextMagicTestsBase):
             self.assertEquals(e.error_code, 4)
             self.assertEquals(e.error_message, 'Insufficient parameters')
 
+
 class Gsm0338CharacterSetTests(unittest.TestCase):
+
     def testSomeStrings(self):
         self.assertEquals(is_gsm('Some latin text'), True)
         self.assertEquals(is_gsm(u'\uABCD'), False)

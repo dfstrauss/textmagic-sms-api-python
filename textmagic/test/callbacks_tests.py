@@ -5,6 +5,7 @@ from textmagic.client import StatusCallbackResponse
 from textmagic.client import ReplyCallbackResponse
 from textmagic.test import gmtime_from_localtime
 
+
 class CallbackUrlTests(TextMagicTestsBase):
 
     def testStatusCallback(self):

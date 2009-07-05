@@ -18,11 +18,8 @@ from textmagic.client import _TextMagicClientBase
 from textmagic import import_json
 json = import_json()
 
-class MockTextMagicClient(_TextMagicClientBase):
 
-    def __init__(self, username, password):
-        super(MockTextMagicClient, self).__init__(username, password)
-        self._load_canned_responses()
+class MockTextMagicClient(_TextMagicClientBase):
 
     @classmethod
     def _load_canned_responses(self):
@@ -46,6 +43,10 @@ class MockTextMagicClient(_TextMagicClientBase):
                 del parameters['password']
                 self.canned_responses.append([parameters, response])
             idx += 1
+
+    def __init__(self, username, password):
+        super(MockTextMagicClient, self).__init__(username, password)
+        self._load_canned_responses()
 
     def _submit_request(self, params_dict):
         possible_responses = [response[1] for response in self.canned_responses if response[0] == params_dict]

@@ -2,14 +2,17 @@
 Check whether a string consists entirely of characters in the GSM 03.38
 character set.
 
-GSM 03.38 character set mapping to Unicode is specified here:
-    http://unicode.org/Public/MAPPINGS/ETSI/GSM0338.TXT
-This code was translated from the C++ snippet at:
-    http://stackoverflow.com/questions/27599/reliable-sms-unicode-gsm-encoding-in-php
-contributed by Magnus Westin:
-    http://stackoverflow.com/users/2957/magnus-westin
+Pass your Unicode or ASCII string to is_gsm() to determine whether all
+characters in the string are from the GSM 03.38 character set.
 
 """
+
+#GSM 03.38 character set mapping to Unicode is specified here:
+#    http://unicode.org/Public/MAPPINGS/ETSI/GSM0338.TXT
+#This code was translated from the C++ snippet at:
+#    http://stackoverflow.com/questions/27599/reliable-sms-unicode-gsm-encoding-in-php
+#contributed by Magnus Westin:
+#    http://stackoverflow.com/users/2957/magnus-westin
 
 UCS2_TO_GSM_LOOKUP_TABLE_SIZE   = 0x100
 NON_GSM                         = 0x80

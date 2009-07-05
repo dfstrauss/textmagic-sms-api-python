@@ -14,6 +14,7 @@ response.
 Other classes can derive from _TextMagicClientBase to implement alternative
 "transport mechanisms". The only known use of this is for testing where
 a "mock-responder" can be built this way.
+
 """
 
 import urllib
@@ -34,6 +35,7 @@ from textmagic.gsm0338 import is_gsm
 
 from textmagic import import_json
 json = import_json()
+
 
 class _TextMagicClientBase(object):
 
@@ -133,6 +135,7 @@ class _TextMagicClientBase(object):
             response['sent_text'] is the message text
             response['parts_count'] is the number of parts the message was
                 split into
+
         """
         if is_gsm(text): unicode_ = 0
         else: unicode_ = 1
@@ -149,6 +152,7 @@ class _TextMagicClientBase(object):
             A textmagic.responses.AccountResponse
 
             response['balance'] is the number of credits in your account
+
         """
         return self._execute_command({
             'cmd': 'account'
@@ -177,6 +181,7 @@ class _TextMagicClientBase(object):
                 message['completed_time'] (optional) is the time the message
                     completed as a time.struct_time in local time
             response['unread'] is the number of unread messages in your Inbox
+
         """
         if not isinstance(ids, list): ids = [ids]
         return self._execute_command({
@@ -201,6 +206,7 @@ class _TextMagicClientBase(object):
                     a time.struct_time in local time
                 message['text'] is the text of the message
             response['unread'] is the number of unread messages in your Inbox
+
         """
         return self._execute_command({
           'cmd': 'receive',
@@ -218,6 +224,7 @@ class _TextMagicClientBase(object):
             A textmagic.responses.DeleteReplyResponse
 
             response['deleted'] is a list of message ids actually deleted
+
         """
         if not isinstance(ids, list): ids = [ids]
         return self._execute_command({
@@ -238,12 +245,14 @@ class _TextMagicClientBase(object):
             response[id] is a dict:
                 message['price'] is the number of credits
                 message['country'] is the 2 letter country code
+
         """
         if not isinstance(phone, list): phone = [phone]
         return self._execute_command({
             'cmd': 'check_number',
             'phone': ','.join([unicode(number) for number in phone])
         }, CheckNumberResponse)
+
 
 class TextMagicClient(_TextMagicClientBase):
     """
@@ -260,6 +269,7 @@ class TextMagicClient(_TextMagicClientBase):
         - check_number
     And you can interpret callback notifications by calling:
         - callbackMessage
+
     """
 
     api_url = 'https://www.textmagic.com/app/api'
@@ -267,6 +277,7 @@ class TextMagicClient(_TextMagicClientBase):
     def __init__(self, username, password):
         """
         Username and password must be provided to instantiate a client.
+
         """
         super(TextMagicClient, self).__init__(username, password)
 

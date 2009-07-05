@@ -16,14 +16,18 @@ from textmagic.test import TextMagicTestsBase
 
 from textmagic.client import TextMagicError
 
+
 class SendTestsBase(TextMagicTestsBase):
     """
-    Abstract class implementing a generic succeeding and failing "send" test case
+    Abstract class implementing a generic succeeding and failing "send" test
+    case.
+
     """
 
     expected_keys = ['sent_text', 'message_id', 'parts_count']
 
-    def succeedingSendCase(self, message, numbers, expected_parts, max_length=None, send_time=None, unicode=None):
+    def succeedingSendCase(self, message, numbers, expected_parts,
+                            max_length=None, send_time=None, unicode=None):
         result = self.client._send(message, numbers, max_length, send_time, unicode)
         if not isinstance(numbers, list): numbers=[numbers]
         self.assertKeysEqualExpectedKeys(result, self.expected_keys)
@@ -34,7 +38,8 @@ class SendTestsBase(TextMagicTestsBase):
             self.assertTrue(message_id.isdigit())
         self.assertEquals(result['parts_count'], expected_parts)
 
-    def failingSendCase(self, message, numbers, error_code, error_message, max_length=None, send_time=None, unicode=None):
+    def failingSendCase(self, message, numbers, error_code, error_message,
+                        max_length=None, send_time=None, unicode=None):
         try:
             self.client._send(message, numbers, max_length, send_time, unicode)
             self.fail('An error is expected to skip this line')
@@ -42,9 +47,11 @@ class SendTestsBase(TextMagicTestsBase):
             self.assertEquals(e.error_code, error_code)
             self.assertEquals(e.error_message, error_message)
 
+
 class BasicSendTests(SendTestsBase):
     """
-    Test the very basics
+    Test the very basics.
+
     """
 
     def testOneShortMessageSucceeds(self):
@@ -81,10 +88,15 @@ class BasicSendTests(SendTestsBase):
         self.assertEquals(result['sent_text'], message)
         self.assertEquals(len(result['message_id']), 1)
 
+
 class MultipartSendTests(SendTestsBase):
     """
-    Abstract class to test message lengths. Must be extended for different character sets
+    Abstract class to test message lengths.
+    
+    This class must be extended to test different character sets
+
     """
+
     def succeedingSendLengthCase(self, length, expected_parts):
         self.succeedingSendCase(
             message=self.char*length,
@@ -93,14 +105,19 @@ class MultipartSendTests(SendTestsBase):
 
     def testLongestOnePartMessageSucceeds(self):
         self.succeedingSendLengthCase(self.max_sms_length, 1)
+
     def testShortestTwoPartMessageSucceeds(self):
         self.succeedingSendLengthCase(self.max_sms_length+1, 2)
+
     def testLongestTwoPartMessageSucceeds(self):
         self.succeedingSendLengthCase(self.max_multi_sms_length*2, 2)
+
     def testShortestThreePartMessageSucceeds(self):
         self.succeedingSendLengthCase((self.max_multi_sms_length*2)+1, 3)
+
     def testLongestThreePartMessageSucceeds(self):
         self.succeedingSendLengthCase(self.max_multi_sms_length*3, 3)
+
     def testTooLongMessageErrorWhenMessageIsLongerThanFourParts(self):
         self.failingSendCase(
             message=self.char*((self.max_multi_sms_length*3)+1),
@@ -108,17 +125,23 @@ class MultipartSendTests(SendTestsBase):
             error_code=7,
             error_message='Too long message')
 
+
 class MultipartGsm0338SendTests(MultipartSendTests):
+
     max_sms_length = MAX_GSM0338_SMS_LENGTH
     max_multi_sms_length = MAX_GSM0338_MULTI_SMS_LENGTH
     char = A_GSM0338_CHARACTER
 
+
 class MultipartUnicodeSendTests(MultipartSendTests):
+
     max_sms_length = MAX_UNICODE_SMS_LENGTH
     max_multi_sms_length = MAX_UNICODE_MULTI_SMS_LENGTH
     char = A_UNICODE_CHARACTER
 
+
 class MaxLengthSendTests(SendTestsBase):
+
     def testWrongParameterValueErrorWhenMaxLengthIsFour(self):
         self.failingSendCase(
             message=A_GSM0338_CHARACTER*MAX_GSM0338_MULTI_SMS_LENGTH*4,
@@ -126,6 +149,7 @@ class MaxLengthSendTests(SendTestsBase):
             error_code=10,
             error_message='Wrong parameter value 4 for parameter max_length',
             max_length = 4)
+
     def testTooLongMessageErrorWhenMaxLengthIsOne(self):
         self.failingSendCase(
             message=A_GSM0338_CHARACTER*MAX_GSM0338_MULTI_SMS_LENGTH*2,
@@ -133,6 +157,7 @@ class MaxLengthSendTests(SendTestsBase):
             error_code=7,
             error_message='Too long message',
             max_length = 1)
+
     def testTooLongMessageErrorWhenMaxLengthIsTwo(self):
         self.failingSendCase(
             message=A_GSM0338_CHARACTER*MAX_GSM0338_MULTI_SMS_LENGTH*3,
@@ -140,6 +165,7 @@ class MaxLengthSendTests(SendTestsBase):
             error_code=7,
             error_message='Too long message',
             max_length = 2)
+
     def testOnePartMessageFailsWhenMaxLengthIsZero(self):
         self.failingSendCase(
             message=A_GSM0338_CHARACTER*MAX_GSM0338_SMS_LENGTH,
@@ -147,6 +173,7 @@ class MaxLengthSendTests(SendTestsBase):
             max_length = 0,
             error_code=10,
             error_message='Wrong parameter value 0 for parameter max_length')
+
     def testTwoPartMessageFailsWhenMaxLengthIsZero(self):
         self.failingSendCase(
             message=A_GSM0338_CHARACTER*MAX_GSM0338_MULTI_SMS_LENGTH*2,
@@ -154,13 +181,16 @@ class MaxLengthSendTests(SendTestsBase):
             max_length = 0,
             error_code=10,
             error_message='Wrong parameter value 0 for parameter max_length')
+
     def testThreePartMessageSucceedsWhenMaxLengthIsUnspecified(self):
         self.succeedingSendCase(
             message=A_GSM0338_CHARACTER*MAX_GSM0338_MULTI_SMS_LENGTH*3,
             numbers=ONE_TEST_NUMBER,
             expected_parts=3)
 
+
 class SendCharacterSetsTests(SendTestsBase):
+
     def testEscapedCharactersLengthenMessage(self):
         escaped_chars = '{}\~[]|'
         for escaped_char in escaped_chars:
@@ -171,7 +201,9 @@ class SendCharacterSetsTests(SendTestsBase):
                 numbers=ONE_TEST_NUMBER,
                 expected_parts=2)
 
+
 class SendTimeTests(SendTestsBase):
+
     def _time_now(self):
         if textmagic.test.running_live:
             return time.time()
@@ -185,6 +217,7 @@ class SendTimeTests(SendTestsBase):
             numbers=ONE_TEST_NUMBER,
             expected_parts=1,
             send_time=send_time)
+
     def _sendTimeInPastFails(self, send_time):
         message = 'Message from the past'
         time_in_message = not isinstance(send_time, time.struct_time)\
@@ -199,29 +232,37 @@ class SendTimeTests(SendTestsBase):
 
     def testSendTimeAsStructTimeInFutureSucceeds(self):
         self._sendTimeInFutureSucceeds(time.localtime(self._time_now()+120))
+
     def testSendTimeAsStructTimeInPastFails(self):
         self._sendTimeInPastFails(time.localtime(self._time_now()-300))
+
     def testSendTimeAsUnixTimeInFutureSucceeds(self):
         self._sendTimeInFutureSucceeds(self._time_now()+120)
+
     def testSendTimeAsUnixTimeInPastFails(self):
         self._sendTimeInPastFails(self._time_now()-300)
 
+
 class SendErrorsTests(SendTestsBase):
     """
-    Test error messages on sending
+    Test error messages on sending.
+
     """
+
     def testEmptyMessageFails(self):
         self.failingSendCase(
             message='',
             numbers=ONE_TEST_NUMBER,
             error_code=1,
             error_message='Messages text is empty')
+
     def testWrongPhoneNumberFormatFails(self):
         self.failingSendCase(
             message='Error testing message',
             numbers=['1234'],
             error_code=9,
             error_message='Wrong phone number format')
+
     def testWrongPasswordFails(self):
         self.client = textmagic.test.client_class(self.client.username, 'koos')
         self.failingSendCase(
@@ -229,6 +270,7 @@ class SendErrorsTests(SendTestsBase):
             numbers=ONE_TEST_NUMBER,
             error_code=5,
             error_message='Invalid username & password combination')
+
     def testWrongValueForUnicodeParameterFails(self):
         self.failingSendCase(
             message='Error testing message',
@@ -236,6 +278,7 @@ class SendErrorsTests(SendTestsBase):
             unicode=10,
             error_code=10,
             error_message='Wrong parameter value 10 for parameter unicode')
+
     def testUnicodeMessageThatSaysNotUnicodeReportsTooLongUnicodeMessageReturnsError(self):
         self.failingSendCase(
             message=u'\uABCD'*(MAX_GSM0338_MULTI_SMS_LENGTH),
@@ -243,6 +286,7 @@ class SendErrorsTests(SendTestsBase):
             unicode=0,
             error_code=15,
             error_message='Unicode symbols detected')
+
     def testGsm0338MessageThatSaysUnicodeSentAsGsm0338(self):
         self.succeedingSendCase(
             message='x'*(MAX_UNICODE_SMS_LENGTH*3),
