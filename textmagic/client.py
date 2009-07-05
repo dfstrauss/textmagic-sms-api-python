@@ -77,19 +77,19 @@ class _TextMagicClientBase(object):
             response['from'] is the phone number from which the reply was sent
 
         """
-        if params_dict.has_key('status'):
+        if 'status' in params_dict:
             return StatusCallbackResponse(params_dict)
         else:
             return ReplyCallbackResponse(params_dict)
 
     def _execute_command(self, params_dict, responseClass):
-        response = self._submit_request(params_dict)
-        self._log_message("Response:     %s\n-----" % response)
-        resp = json.loads(response)
-        if resp.has_key('error_code'):
-            raise TextMagicError(resp)
+        _response = self._submit_request(params_dict)
+        self._log_message("Response:     %s\n-----" % _response)
+        response = json.loads(_response)
+        if 'error_code' in response:
+            raise TextMagicError(response)
         else:
-            return responseClass(resp)
+            return responseClass(response)
 
     def _send(self, text, phone, max_length, send_time, unicode_):
         if not isinstance(phone, list):

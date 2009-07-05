@@ -86,7 +86,7 @@ class MessageStatusResponse(dict):
             self[key]['status'] = _cast_to_type(unicode, self[key]['status'])
             self[key]['created_time'] = _time_or_none(self[key]['created_time'])
             self[key]['reply_number'] = _cast_to_type(unicode, self[key]['reply_number'])
-            if self[key].has_key('completed_time'):
+            if 'completed_time' in self[key]:
                 self[key]['completed_time'] = _time_or_none(self[key]['completed_time'])
                 self[key]['credits_cost'] = _cast_to_type(float, self[key]['credits_cost'])
 

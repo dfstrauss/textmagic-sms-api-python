@@ -37,7 +37,7 @@ class DeleteReplyErrorsTests(TextMagicTestsBase):
 
     def testTryingToDeleteTooManyItems(self):
         try:
-            self.client.delete_reply(['5111%03d'%num for num in xrange(101)])
+            self.client.delete_reply(['5111%03d' % num for num in xrange(101)])
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
             self.assertEquals(e.error_code, 12)
