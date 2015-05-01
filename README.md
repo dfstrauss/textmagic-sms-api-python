@@ -37,7 +37,7 @@ response = client.message_status(message_id)
 status = response[message_id]['status']
 ```
 
-There is more detail in the UserManual
+There is more detail in the [User Manual](https://github.com/dfstrauss/textmagic-sms-api-python/wiki/UserManual)
 
 # <a href='http://www.textmagic.com/affiliate/fordevelopers.html'>SMS Gateway Affiliate Programme For Developers</a> #
 
