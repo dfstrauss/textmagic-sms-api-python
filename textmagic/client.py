@@ -91,7 +91,7 @@ class _TextMagicClientBase(object):
         else:
             return responseClass(response)
 
-    def _send(self, text, phone, max_length, send_time, unicode_):
+    def _send(self, text, phone, max_length, send_time, unicode_, sender):
         if not isinstance(phone, list):
             phone = [phone]
         if isinstance(send_time, time.struct_time):
@@ -103,14 +103,16 @@ class _TextMagicClientBase(object):
           'text': text.encode('utf-8'),
           'phone': str(','.join([unicode(number) for number in phone])),
           'unicode': str(unicode_),
-          }
+        }
+        if sender is not None:
+            params_dict["from"] = sender
         if max_length is not None:
             params_dict['max_length'] = str(max_length)
         if send_time is not None:
             params_dict['send_time'] = str(int(send_time))
         return self._execute_command(params_dict, SendResponse)
 
-    def send(self, text, phone, max_length=None, send_time=None):
+    def send(self, text, phone, max_length=None, send_time=None, sender=None):
         """
         Send a message to one or more numbers.
 
@@ -139,7 +141,7 @@ class _TextMagicClientBase(object):
 
         """
         unicode_ = is_gsm(text) and '0' or '1'
-        return self._send(text, phone, max_length, send_time, unicode_)
+        return self._send(text, phone, max_length, send_time, unicode_, sender)
 
     def account(self):
         """
