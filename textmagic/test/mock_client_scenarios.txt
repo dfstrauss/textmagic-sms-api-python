@@ -7,6 +7,9 @@ Response:    {"message_id":{"8714636":"9993334444"},"sent_text":"\u2800\u2801\u2
 1.1 testOneShortMessageSucceeds
 Parameters:  username=username&text=Test+Message&cmd=send&phone=9993334444&unicode=0&password=password
 Response:    {"message_id":{"8709765":"9993334444"},"sent_text":"Test Message","parts_count":1}
+1.(1) testOneShortMessageWithSenderSucceeds
+Parameters:  username=username&text=Test+Message&cmd=send&phone=9993334444&unicode=0&password=password&from=xyz
+Response:    {"message_id":{"8709765":"9993334444"},"sent_text":"Test Message","parts_count":1,"from":"xyz"}
 1.2 testOneShortUnicodeMessageSucceeds
 Parameters:  username=username&text=%E2%A0%80%E2%A0%81%E2%A0%82%E2%A0%83+%E2%9F%B0&cmd=send&phone=9993334444&unicode=1&password=password
 Response:    {"message_id":{"8714636":"9993334444"},"sent_text":"\u2800\u2801\u2802\u2803 \u27f0","parts_count":1}

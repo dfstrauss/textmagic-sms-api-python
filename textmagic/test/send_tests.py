@@ -27,11 +27,14 @@ class SendTestsBase(TextMagicTestsBase):
     expected_keys = ['sent_text', 'message_id', 'parts_count']
 
     def succeedingSendCase(self, message, numbers, expected_parts,
-                            max_length=None, send_time=None, unicode=None):
-        response = self.client._send(message, numbers, max_length, send_time, unicode)
+                            max_length=None, send_time=None, unicode=None, sender=None):
+        response = self.client._send(message, numbers, max_length, send_time, unicode, sender)
         if not isinstance(numbers, list):
             numbers=[numbers]
-        self.assertKeysEqualExpectedKeys(response, self.expected_keys)
+        expected_keys = list(self.expected_keys)
+        if sender is not None:
+            expected_keys.extend(['from'])
+        self.assertKeysEqualExpectedKeys(response, expected_keys)
         self.assertEquals(response['sent_text'], message)
         self.assertEquals(len(response['message_id']), len(numbers))
         self.assertEquals(set(response['message_id'].values()), set(numbers))
@@ -40,9 +43,9 @@ class SendTestsBase(TextMagicTestsBase):
         self.assertEquals(response['parts_count'], expected_parts)
 
     def failingSendCase(self, message, numbers, error_code, error_message,
-                        max_length=None, send_time=None, unicode=None):
+                        max_length=None, send_time=None, unicode=None, sender=None):
         try:
-            self.client._send(message, numbers, max_length, send_time, unicode)
+            self.client._send(message, numbers, max_length, send_time, unicode, sender)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
             self.assertEquals(e.error_code, error_code)
@@ -60,6 +63,13 @@ class BasicSendTests(SendTestsBase):
             message='Test Message',
             numbers=ONE_TEST_NUMBER,
             expected_parts=1)
+
+    def testOneShortMessageWithSenderSucceeds(self):
+        self.succeedingSendCase(
+            message='Test Message',
+            numbers=ONE_TEST_NUMBER,
+            expected_parts=1,
+            sender='xyz')
 
     def testThreeShortMessagesSucceed(self):
         self.succeedingSendCase(
