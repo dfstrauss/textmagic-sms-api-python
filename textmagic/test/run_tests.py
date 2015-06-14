@@ -40,7 +40,7 @@ import textmagic.test.responses_tests
 from textmagic.test import LiveUnsafeTests
 
 def usage():
-    print "Usage: test_client.py\n%s" % __doc__
+    print "Usage: run_tests.py\n%s" % __doc__
 
 def main():
     try:
