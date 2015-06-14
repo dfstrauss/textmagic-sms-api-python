@@ -293,6 +293,6 @@ class TextMagicClient(_TextMagicClientBase):
         self._log_message("Parameters:   %s" % params)
         request = urllib2.Request(self.api_url, params)
         response = urllib2.urlopen(request)
-        assert response.info()['Content-Type'] == 'application/json; charset=utf-8',\
+        assert response.info()['Content-Type'].startswith('application/json'),\
             'Invalid server response - Wrong HTTP Content-Type header!'
         return response.read()
