@@ -86,16 +86,14 @@ def main():
         textmagic.test.callbacks_tests.CallbackUrlTests,
         textmagic.test.responses_tests.TextMagicResponseTests,
     ]
-## Uncomment to run only BasicSendTests
-#    tests = [
-#        textmagic.test.send_tests.BasicSendTests,
-#    ]
+    # Uncomment below to run only BasicSendTests
+    # tests = [
+    #    textmagic.test.send_tests.BasicSendTests,
+    # ]
     for test in tests:
         # Filter out live-unsafe tests when running live
-        if (textmagic.test.running_live and\
-            not LiveUnsafeTests in test.__bases__) or\
-            not textmagic.test.running_live:
-                suite.addTest(unittest.makeSuite(test))
+        if (textmagic.test.running_live and not LiveUnsafeTests in test.__bases__) or not textmagic.test.running_live:
+            suite.addTest(unittest.makeSuite(test))
 
     unittest.TextTestRunner(verbosity=2).run(suite)
 
