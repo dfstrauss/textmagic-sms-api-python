@@ -2,14 +2,14 @@ from distutils.core import setup
 
 setup(
     name="PyTextMagicSMS",
-    version="0.1",
+    version="0.2",
 
     description="TextMagic SMS API",
     long_description="A Python wrapper for the TextMagic HTTPS API to send SMS messages",
 
     author="Dawie Strauss",
     author_email="dfstrauss@gmail.com",
-    url="http://code.google.com/p/textmagic-sms-api-python/",
+    url="https://github.com/dfstrauss/textmagic-sms-api-python",
     license="BSD",
     packages=['textmagic'],
     platforms=['any'],
