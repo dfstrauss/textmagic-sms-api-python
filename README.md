@@ -1,25 +1,22 @@
 [TextMagic](http://www.textmagic.com/) offers a quick, cost-effective way to send text messages from any computer. This package provides a simple Python API on top of the [TextMagic HTTPS API](http://api.textmagic.com/https-api); which is a web-based interface to the SMS functionality.
 
+This version is for Python 3.
+
 ### Install ###
 Install using easy\_install:
 ```
-easy_install PyTextMagicSMS
+easy_install Py3TextMagicSMS
 ```
 
 **OR manually:**
 
-  * download it from http://pypi.python.org/pypi/PyTextMagicSMS
+  * download it from http://pypi.python.org/pypi/Py3TextMagicSMS
   * unzip the downloaded file
-  * change into the `PyTextMagicSMS-x.x` directory
+  * change into the `Py3TextMagicSMS-x.x` directory
   * run `setup.py` as follows
 ```
 python setup.py install
 ```
-  * `PyTextMagicSMS` depends on **one** of the following:
-    * Python 2.6 or
-    * django or
-    * simplejson (which can be downloaded from http://pypi.python.org/pypi/simplejson or `easy_install simplejson`)
-
 ### Register ###
 Before using the service you need to register at http://www.textmagic.com/ and obtain an API password (different from your login password) at https://www.textmagic.com/app/wt/account/api/cmd/password.
 

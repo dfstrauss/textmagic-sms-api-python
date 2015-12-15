@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name="PyTextMagicSMS",
+    name="Py3TextMagicSMS",
     version="0.2",
 
     description="TextMagic SMS API",
@@ -14,7 +14,7 @@ setup(
     packages=['textmagic'],
     platforms=['any'],
 
-    download_url="http://pypi.python.org/pypi/PyTextMagicSMS",
+    download_url="http://pypi.python.org/pypi/Py3TextMagicSMS",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
@@ -22,10 +22,7 @@ setup(
         'Intended Audience :: Telecommunications Industry',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.4',
-        'Programming Language :: Python :: 2.5',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Topic :: Communications',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],

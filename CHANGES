@@ -1,29 +1,5 @@
-PyTextMagicSMS changelog
+Py3TextMagicSMS changelog
 ========================
 
-0.2 (2015-06-14)
-- Allow sender id as parameter when sending
-
-0.1 (2009-07-06)
-- Minor tweaks
-
-0.1b2 (2009-06-28)
-- Updated help documentation in source code
-
-0.1b1 (2009-06-25)
-- Added check_number command
-
-0.1a5 (2009-06-25)
-- Added support for the send_time parameter to the send command
-
-0.1a4 (2009-06-24)
-- Renamings for clarity and consistency
-
-0.1a3 (2009-06-23)
-- Fix mistakes in sample code
-
-0.1a2 (2009-06-21)
-- Improved documentation
-
-0.1a1 (2009-06-19)
-- First public release
+0.2 (2015-12-15)
+- First release for Python 3
