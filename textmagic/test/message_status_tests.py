@@ -13,6 +13,7 @@ class MessageStatusTestsBase(TextMagicTestsBase):
         message = 'sdfqwersdfgfdg'
         response = self.client.send(message, numbers)
         ids = list(response['message_id'].keys())
+        ids.sort()
         self.getStatus(ids, message)
         return (ids, message)
 

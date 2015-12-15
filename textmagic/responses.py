@@ -123,6 +123,6 @@ class ReplyCallbackResponse(dict):
     def __init__(self, dict_):
         super(ReplyCallbackResponse, self).__init__(dict_)
         self['message_id'] = _cast_to_type(str, self['message_id'])
-        self['text'] = _cast_to_type(str, self['text'].decode('utf-8'))
+        self['text'] = _cast_to_type(str, self['text'])
         self['timestamp'] = _time_or_none(self['timestamp'])
         self['from'] = _cast_to_type(str, self['from'])

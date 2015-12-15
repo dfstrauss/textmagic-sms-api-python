@@ -51,7 +51,7 @@ class CallbackUrlTests(TextMagicTestsBase):
     def testReceivedCallbackWithUnicodeText(self):
         post_params = {
             'message_id': "1788907",
-            'text': "\xE2\xA0\x80",
+            'text': b'\xE2\xA0\x80'.decode(),
             'timestamp': "1243837563",
             'from': "27991114444",
         }

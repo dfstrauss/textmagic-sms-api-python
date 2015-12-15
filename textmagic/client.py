@@ -84,7 +84,7 @@ class _TextMagicClientBase(object):
     def _execute_command(self, params_dict, responseClass):
         _response = self._submit_request(params_dict)
         self._log_message("Response:     %s\n-----" % _response)
-        response = json.loads(_response)
+        response = json.loads(_response.decode())
         if 'error_code' in response:
             raise TextMagicError(response)
         else:
@@ -99,7 +99,7 @@ class _TextMagicClientBase(object):
             unicode_ = is_gsm(text) and '0' or '1'
         params_dict = {
           'cmd': 'send',
-          'text': text.encode('utf-8'),
+          'text': text,
           'phone': str(','.join([str(number) for number in phone])),
           'unicode': str(unicode_),
         }
@@ -288,7 +288,7 @@ class TextMagicClient(_TextMagicClientBase):
     def _submit_request(self, params_dict):
         params_dict['username'] = self.username
         params_dict['password'] = self.password
-        params = urllib.parse.urlencode(params_dict)
+        params = urllib.parse.urlencode(params_dict).encode()
         self._log_message("Parameters:   %s" % params)
         request = urllib.request.Request(self.api_url, params)
         response = urllib.request.urlopen(request)

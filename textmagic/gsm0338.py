@@ -95,8 +95,8 @@ def not_gsm(char):
                         (ordinal <= (UCS2_GREEK_CAPITAL_LETTER_ALPHA + UCS2_GCL_RANGE))):
         result = (ucs2_gcl_to_gsm[ordinal - UCS2_GREEK_CAPITAL_LETTER_ALPHA] == NON_GSM)
     elif(ordinal == 0x20AC):  # Euro sign
-        result = False;
-    return result;
+        result = False
+    return result
 
 def is_gsm(string):
     """Does the string consist entirely of GSM03.38 characters?"""

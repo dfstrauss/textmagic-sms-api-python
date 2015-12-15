@@ -51,4 +51,4 @@ class MockTextMagicClient(_TextMagicClientBase):
         possible_responses = [response[1] for response in self.canned_responses if response[0] == params_dict]
         assert len(possible_responses) > 0
         del self.canned_responses[self.canned_responses.index([params_dict, possible_responses[0]])]
-        return possible_responses[0]
+        return possible_responses[0].encode()

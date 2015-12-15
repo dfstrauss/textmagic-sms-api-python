@@ -125,7 +125,7 @@ Send:
 Parameters:  username=username&text=sdfqwersdfgfdg&cmd=send&phone=9993331234%2C9991239999%2C9991114444&unicode=0&password=password
 Response:    {"message_id":{"8709709":"9993331234","8709710":"9991239999","8709711":"9991114444"},"sent_text":"sdfqwersdfgfdg","parts_count":1}
 Sent to operator:
-Parameters:  username=username&cmd=message_status&password=password&ids=8709709%2C8709711%2C8709710
+Parameters:  username=username&cmd=message_status&password=password&ids=8709709%2C8709710%2C8709711
 Response:    {"8709709":{"text":"sdfqwersdfgfdg","status":"r","created_time":"1243625271","reply_number":"447624800500"},"8709710":{"text":"sdfqwersdfgfdg","status":"r","created_time":"1243625271","reply_number":"447624800500"},"8709711":{"text":"sdfqwersdfgfdg","status":"r","created_time":"1243625271","reply_number":"447624800500"}}
 5.1 testReceiveLastTwoMessages
 First message:
