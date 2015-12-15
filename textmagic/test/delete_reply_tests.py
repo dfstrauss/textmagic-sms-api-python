@@ -12,7 +12,7 @@ class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
         self.assertKeysEqualExpectedKeys(response, ['deleted'])
         self.assertEquals(
             set(response['deleted']),
-            set([unicode(id) for id in ids]))
+            set([str(id) for id in ids]))
 
     def testDeleteOneMessage(self):
         self.deleteIds(1787522)
@@ -24,7 +24,7 @@ class DeleteReplyTests(TextMagicTestsBase, LiveUnsafeTests):
         try:
             self.client.delete_reply([1787548,1787573])
             self.fail('An error is expected to skip this line')
-        except TextMagicError, e:
+        except TextMagicError as e:
             self.assertEquals(e.error_code, 14)
             self.assertEquals(e.error_message, 'Message with id 1787548, 1787573 does not exist')
 
@@ -37,8 +37,8 @@ class DeleteReplyErrorsTests(TextMagicTestsBase):
 
     def testTryingToDeleteTooManyItems(self):
         try:
-            self.client.delete_reply(['5111%03d' % num for num in xrange(101)])
+            self.client.delete_reply(['5111%03d' % num for num in range(101)])
             self.fail('An error is expected to skip this line')
-        except TextMagicError, e:
+        except TextMagicError as e:
             self.assertEquals(e.error_code, 12)
             self.assertEquals(e.error_message, 'Too many items in one request')

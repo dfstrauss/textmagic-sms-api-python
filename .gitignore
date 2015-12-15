@@ -33,3 +33,5 @@ var/
 *.egg
 
 MANIFEST
+
+*.bak

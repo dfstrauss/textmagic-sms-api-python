@@ -100,7 +100,7 @@ def not_gsm(char):
 
 def is_gsm(string):
     """Does the string consist entirely of GSM03.38 characters?"""
-    assert isinstance(string, basestring)
+    assert isinstance(string, str)
     for ch in string:
         if (not_gsm(ch)):
             return False

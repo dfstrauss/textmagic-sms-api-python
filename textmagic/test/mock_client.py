@@ -11,7 +11,7 @@ collected for this file by running "live" tests and copying scenarios from
 executed_commands.log.
 
 """
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from textmagic.client import _TextMagicClientBase
 
@@ -31,13 +31,13 @@ class MockTextMagicClient(_TextMagicClientBase):
             if line.startswith(params_start):
                 params = line[len(params_start):].strip()
                 # A "Response:" line must follow a "Parameters:" line
-                line = scenarios_file.next()
+                line = next(scenarios_file)
                 assert line.startswith(response_start)
                 response = line[len(response_start):].strip()
                 parameters = {}
                 for param in params.split('&'):
                     name, value = param.split('=')
-                    parameters[name] = urllib.unquote_plus(value)
+                    parameters[name] = urllib.parse.unquote_plus(value)
                 del parameters['username']
                 del parameters['password']
                 self.canned_responses.append([parameters, response])

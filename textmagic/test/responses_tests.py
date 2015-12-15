@@ -31,14 +31,14 @@ class TextMagicResponseTests(unittest.TestCase):
         message = json.loads('{"message_id":[],"sent_text":null,"parts_count":1}')
         try:
             textmagic.client.SendResponse(message)
-        except AssertionError, e:
+        except AssertionError as e:
             self.assertEquals(str(e), 'Invalid server response - message_id cannot be empty!')
 
     def testAccountResponse(self):
         message = json.loads('{"balance":"96.5"}')
         response = textmagic.client.AccountResponse(message)
         self.assertEquals(response['balance'], 96.5)
-        self.assertTrue(response.keys() == ['balance'])
+        self.assertTrue(list(response.keys()) == ['balance'])
 
     def testReceiveResponse(self):
         message = json.loads('{"messages":\
@@ -49,7 +49,7 @@ class TextMagicResponseTests(unittest.TestCase):
             {"message_id":"1787603",\
             "from":"27829991111",\
             "timestamp":1243635007,\
-            "text":"\u2800\u2801\u2802\u2803 \u27f0"}],\
+            "text":"\\u2800\\u2801\\u2802\\u2803 \\u27f0"}],\
             "unread":0}')
         response = textmagic.client.ReceiveResponse(message)
         self.assertTrue(set(response) == set(['messages', 'unread']))
@@ -69,18 +69,18 @@ class TextMagicResponseTests(unittest.TestCase):
         self.assertEquals(
             gmtime_from_localtime(response['messages'][1]['timestamp']),
             (2009, 5, 29, 22, 10, 7, 4, 149, 0))
-        self.assertEquals(response['messages'][1]['text'], u'\u2800\u2801\u2802\u2803 \u27f0')
+        self.assertEquals(response['messages'][1]['text'], '\u2800\u2801\u2802\u2803 \u27f0')
 
     def assertMessageStatusBaseParameters(self, response):
         self.assertTrue(len(response) == 1)
-        self.assertTrue(response.keys()[0].isdigit())
-        status = response[response.keys()[0]]
+        self.assertTrue(list(response.keys())[0].isdigit())
+        status = response[list(response.keys())[0]]
         self.assertTrue(isinstance(status, dict))
-        self.assertTrue(isinstance(status['text'], unicode))
-        self.assertTrue(isinstance(status['status'], unicode))
+        self.assertTrue(isinstance(status['text'], str))
+        self.assertTrue(isinstance(status['status'], str))
         self.assertEquals(len(status['status']), 1)
         self.assertTrue(isinstance(status['created_time'], time.struct_time))
-        self.assertTrue(isinstance(status['reply_number'], unicode))
+        self.assertTrue(isinstance(status['reply_number'], str))
         self.assertTrue(status['reply_number'].isdigit())
         return status
 
@@ -91,7 +91,7 @@ class TextMagicResponseTests(unittest.TestCase):
             "created_time":"1244401369",\
             "reply_number":"447624800500"}}')
         response = textmagic.client.MessageStatusResponse(message)
-        self.assertTrue(response.keys() == ['8768531'])
+        self.assertTrue(list(response.keys()) == ['8768531'])
         self.assertMessageStatusBaseParameters(response)
 
     def testMessageStatusDoneResponse(self):
@@ -103,7 +103,7 @@ class TextMagicResponseTests(unittest.TestCase):
             "completed_time":"1244401465",\
             "credits_cost":"0.5"}}')
         response = textmagic.client.MessageStatusResponse(message)
-        self.assertTrue(response.keys() == ['8768531'])
+        self.assertTrue(list(response.keys()) == ['8768531'])
         status = self.assertMessageStatusBaseParameters(response)
         self.assertTrue(isinstance(status['completed_time'], time.struct_time))
         self.assertTrue(isinstance(status['credits_cost'], float))
@@ -124,7 +124,7 @@ class TextMagicResponseTests(unittest.TestCase):
     def testDeleteReplyResponse(self):
         message = json.loads('{"deleted":["1787548","1787572"]}')
         response = textmagic.client.DeleteReplyResponse(message)
-        self.assertTrue(response.keys() == ['deleted'])
+        self.assertTrue(list(response.keys()) == ['deleted'])
         self.assertTrue(isinstance(response['deleted'], list))
         for message_id in response['deleted']:
             self.assertTrue(message_id.isdigit())
@@ -138,11 +138,11 @@ class TextMagicResponseTests(unittest.TestCase):
         for number in response:
             self.assertTrue(isinstance(response[number]['price'], float))
             self.assertEquals(len(response[number]['country']), 2)
-            self.assertTrue(isinstance(response[number]['country'], unicode))
+            self.assertTrue(isinstance(response[number]['country'], str))
 
     def testErrorResponse(self):
         message = json.loads('{"error_code":15,"error_message":"Unicode symbols detected"}')
         response = textmagic.client.TextMagicError(message)
         self.assertTrue(isinstance(response, Exception))
         self.assertTrue(isinstance(response.error_code, int))
-        self.assertTrue(isinstance(response.error_message, unicode))
+        self.assertTrue(isinstance(response.error_message, str))

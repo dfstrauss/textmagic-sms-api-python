@@ -40,13 +40,13 @@ import textmagic.test.responses_tests
 from textmagic.test import LiveUnsafeTests
 
 def usage():
-    print "Usage: run_tests.py\n%s" % __doc__
+    print("Usage: run_tests.py\n%s" % __doc__)
 
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hlu:p:", ["help", "live", "username=", "password="])
-    except getopt.GetoptError, err:
-        print str(err)
+    except getopt.GetoptError as err:
+        print(str(err))
         usage()
         sys.exit(2)
     for o, a in opts:

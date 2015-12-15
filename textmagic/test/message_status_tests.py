@@ -12,7 +12,7 @@ class MessageStatusTestsBase(TextMagicTestsBase):
     def sendAndCheckStatusTo(self, numbers):
         message = 'sdfqwersdfgfdg'
         response = self.client.send(message, numbers)
-        ids = response['message_id'].keys()
+        ids = list(response['message_id'].keys())
         self.getStatus(ids, message)
         return (ids, message)
 

@@ -17,8 +17,7 @@ a "mock-responder" can be built this way.
 
 """
 
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
 import time
 
 from textmagic.responses import SendResponse
@@ -101,7 +100,7 @@ class _TextMagicClientBase(object):
         params_dict = {
           'cmd': 'send',
           'text': text.encode('utf-8'),
-          'phone': str(','.join([unicode(number) for number in phone])),
+          'phone': str(','.join([str(number) for number in phone])),
           'unicode': str(unicode_),
         }
         if sender is not None:
@@ -189,7 +188,7 @@ class _TextMagicClientBase(object):
             ids = [ids]
         return self._execute_command({
             'cmd': 'message_status',
-            'ids': ','.join([unicode(id) for id in ids])
+            'ids': ','.join([str(id) for id in ids])
         }, MessageStatusResponse)
 
     def receive(self, last_retrieved_id):
@@ -213,7 +212,7 @@ class _TextMagicClientBase(object):
         """
         return self._execute_command({
           'cmd': 'receive',
-          'last_retrieved_id': unicode(last_retrieved_id)
+          'last_retrieved_id': str(last_retrieved_id)
         }, ReceiveResponse)
 
     def delete_reply(self, ids):
@@ -233,7 +232,7 @@ class _TextMagicClientBase(object):
             ids = [ids]
         return self._execute_command({
           'cmd': 'delete_reply',
-          'ids': ','.join([unicode(id) for id in ids])
+          'ids': ','.join([str(id) for id in ids])
         }, DeleteReplyResponse)
 
     def check_number(self, phone):
@@ -255,7 +254,7 @@ class _TextMagicClientBase(object):
             phone = [phone]
         return self._execute_command({
             'cmd': 'check_number',
-            'phone': ','.join([unicode(number) for number in phone])
+            'phone': ','.join([str(number) for number in phone])
         }, CheckNumberResponse)
 
 
@@ -289,10 +288,10 @@ class TextMagicClient(_TextMagicClientBase):
     def _submit_request(self, params_dict):
         params_dict['username'] = self.username
         params_dict['password'] = self.password
-        params = urllib.urlencode(params_dict)
+        params = urllib.parse.urlencode(params_dict)
         self._log_message("Parameters:   %s" % params)
-        request = urllib2.Request(self.api_url, params)
-        response = urllib2.urlopen(request)
+        request = urllib.request.Request(self.api_url, params)
+        response = urllib.request.urlopen(request)
         assert response.info()['Content-Type'].startswith('application/json'),\
             'Invalid server response - Wrong HTTP Content-Type header!'
         return response.read()

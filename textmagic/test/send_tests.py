@@ -28,8 +28,8 @@ class SendTestsBase(TextMagicTestsBase):
     expected_keys = ['sent_text', 'message_id', 'parts_count']
 
     def succeedingSendCase(self, message, numbers, expected_parts,
-                            max_length=None, send_time=None, unicode=None, sender=None):
-        response = self.client._send(message, numbers, max_length, send_time, unicode, sender)
+                            max_length=None, send_time=None, str=None, sender=None):
+        response = self.client._send(message, numbers, max_length, send_time, str, sender)
         if not isinstance(numbers, list):
             numbers=[numbers]
         expected_keys = list(self.expected_keys)
@@ -44,11 +44,11 @@ class SendTestsBase(TextMagicTestsBase):
         self.assertEquals(response['parts_count'], expected_parts)
 
     def failingSendCase(self, message, numbers, error_code, error_message,
-                        max_length=None, send_time=None, unicode=None, sender=None):
+                        max_length=None, send_time=None, str=None, sender=None):
         try:
-            self.client._send(message, numbers, max_length, send_time, unicode, sender)
+            self.client._send(message, numbers, max_length, send_time, str, sender)
             self.fail('An error is expected to skip this line')
-        except TextMagicError, e:
+        except TextMagicError as e:
             self.assertEquals(e.error_code, error_code)
             self.assertEquals(e.error_message, error_message)
 
@@ -73,7 +73,7 @@ class BasicSendTests(SendTestsBase):
 
     def testOneShortUnicodeMessageSucceeds(self):
         self.succeedingSendCase(
-            message=u'\u2800\u2801\u2802\u2803 \u27F0',
+            message='\u2800\u2801\u2802\u2803 \u27F0',
             numbers=ONE_TEST_NUMBER,
             expected_parts=1)
 
@@ -86,7 +86,7 @@ class BasicSendTests(SendTestsBase):
         self.assertEquals(len(response['message_id']), 1)
 
     def testSendCanBeCalledWithoutOptionalParametersUnicode(self):
-        message = u'\u2800\u2801\u2802\u2803 \u27F0'
+        message = '\u2800\u2801\u2802\u2803 \u27F0'
         number = ONE_TEST_NUMBER
         response = self.client.send(message, number)
         self.assertKeysEqualExpectedKeys(response, self.expected_keys)
@@ -267,15 +267,15 @@ class SendErrorsTests(SendTestsBase):
         self.failingSendCase(
             message='Error testing message',
             numbers=ONE_TEST_NUMBER,
-            unicode=10,
+            str=10,
             error_code=10,
             error_message='Wrong parameter value 10 for parameter unicode')
 
     def testUnicodeMessageThatSaysNotUnicodeReportsTooLongUnicodeMessageReturnsError(self):
         self.failingSendCase(
-            message=u'\uABCD'*(MAX_GSM0338_MULTI_SMS_LENGTH),
+            message='\uABCD'*(MAX_GSM0338_MULTI_SMS_LENGTH),
             numbers=ONE_TEST_NUMBER,
-            unicode=0,
+            str=0,
             error_code=15,
             error_message='Unicode symbols detected')
 
@@ -283,5 +283,5 @@ class SendErrorsTests(SendTestsBase):
         self.succeedingSendCase(
             message='x'*(MAX_UNICODE_SMS_LENGTH*3),
             numbers=ONE_TEST_NUMBER,
-            unicode=1,
+            str=1,
             expected_parts=2)
