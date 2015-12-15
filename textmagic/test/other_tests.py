@@ -21,8 +21,8 @@ class ParameterErrorTests(TextMagicTestsBase):
             self.client._execute_command({'cmd': 'send'}, SendResponse)
             self.fail('An error is expected to skip this line')
         except TextMagicError, e:
-            self.assertEquals(e.error_code, 4)
-            self.assertEquals(e.error_message, 'Insufficient parameters')
+            self.assertEquals(e.error_code, 9)
+            self.assertEquals(e.error_message, 'Wrong phone number format')
 
 
 class Gsm0338CharacterSetTests(unittest.TestCase):

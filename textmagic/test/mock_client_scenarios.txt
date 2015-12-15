@@ -50,8 +50,8 @@ Response:    {"message_id":{"8709777":"9993334444"},"sent_text":"XXXXXXXXXXXXXXX
 Parameters:   username=username&text=Message+from+the+future&cmd=send&phone=9993334444&unicode=0&send_time=1245879343&password=password
 Response:     {"message_id":{"8931187":"9993334444"},"sent_text":"Message from the future","parts_count":1}
 1.(15) testSendTimeInPast
-Parameters:   username=username&text=Message+from+the+past&cmd=send&phone=9993334444&unicode=0&send_time=1245878923&password=password
-Response:     {"error_code":10,"error_message":"Wrong parameter value 1245878923 for parameter send_time"}
+Parameters:   username=dawie.strauss&text=Message+from+the+future&cmd=send&phone=9993334444&unicode=0&send_time=1245878923&password=BXumAOQZGN
+Response:     {"message_id":{"77287623":"9993334444"},"sent_text":"Message from the future","parts_count":1}
 2.1 testTooLongMessageErrorWhenMessageIsLongerThanFourParts (GSM 03.38)
 Parameters:  username=username&text=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&cmd=send&phone=9993334444&unicode=0&password=password
 Response:    {"error_code":7,"error_message":"Too long message"}
@@ -182,7 +182,7 @@ Parameters:  username=username&password=password&cmd=nonexistent_command
 Response:   {"error_code":3,"error_message":"Command is undefined"}
 8.6 testInsufficientParametersFail
 Parameters:  username=username&password=password&cmd=send
-Response:   {"error_code":4,"error_message":"Insufficient parameters"}
+Response:   {"error_code":9,"error_message":"Wrong phone number format"}
 (9).(1) testCheckOneNumber
 Parameters:   username=username&phone=27123456789&password=password&cmd=check_number
 Response:     {"27123456789":{"price":0.5,"country":"ZA"}}
